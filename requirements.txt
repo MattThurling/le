@@ -5,3 +5,4 @@ python_dotenv
 dj_database_url
 django-ckeditor
 django-tailwind
+tinymce
