@@ -27,12 +27,12 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          gcloud builds submit --tag gcr.io/large-english/le-api
+          gcloud builds submit --tag gcr.io/large-english/le
 
       - name: Deploy to Cloud Run
         run: |
-          gcloud run deploy le-api \
-            --image gcr.io/large-english/le-api \
+          gcloud run deploy le \
+            --image gcr.io/large-english/le \
             --platform managed \
             --region europe-west2 \
             --allow-unauthenticated \

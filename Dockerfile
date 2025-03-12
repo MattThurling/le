@@ -19,4 +19,4 @@ ENV PORT=8080
 RUN python manage.py collectstatic --noinput
 
 # Start Django server
-CMD gunicorn --bind 0.0.0.0:8080 backend.wsgi:application
+CMD gunicorn --bind 0.0.0.0:8080 LargeEnglish.wsgi:application
