@@ -2,6 +2,9 @@ from pathlib import Path
 from dotenv import load_dotenv
 import os
 
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -14,9 +17,6 @@ STORAGE_ROOT_URL = os.getenv("STORAGE_ROOT_URL")
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-%i)k$8pt1%f+e*&%3%$37u6x^!^udnkx((u+@xj%ed_oi415l7'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'whitenoise.runserver_nostatic',
+    'django.contrib.sitemaps',
     'website',
     'tinymce',
     'tailwind',
