@@ -16,7 +16,7 @@ STORAGE_ROOT_URL = os.getenv("STORAGE_ROOT_URL")
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%i)k$8pt1%f+e*&%3%$37u6x^!^udnkx((u+@xj%ed_oi415l7'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
