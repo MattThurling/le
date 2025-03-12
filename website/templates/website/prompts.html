@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Header Section -->
+<header class="text-center">
+  <p class="text-base-content">
+    A collection of AI Drills to help you practise your English. Open them directly in ChatGPT or
+    copy the prompt to use in your app of choice. Remember kids, AI makes mistakes and has no soul
+    or feelings, so feel free to argue with it!
+  </p>
+</header>
+
+<div class="divider"></div>
+
+<!-- Prompts List -->
+<div class="mt-10">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    {% for prompt in prompts %}
+    <!-- <div class="card">{{ prompt.title }}: {{ prompt.content }}</div> -->
+
+    <div class="card card-sm border border-gray-700">
+      <!-- Image Section -->
+      <figure>
+        <img
+          src="{{ prompt.image_url }}"
+          class="w-full h-40 object-cover rounded-t-lg"
+          alt="Prompt image"
+        />
+      </figure>
+  
+      <div class="card-body">
+        <!-- Title -->
+        <h2 class="card-title text-lg font-semibold">{{ prompt.title }}</h2>
+  
+        <!-- Action Buttons -->
+        <div class="flex items-center gap-3 mt-3">
+          <!-- ChatGPT Button -->
+          <button class="btn btn-primary" onclick="openChatGPT('{{ prompt.content|escapejs }}')">Open in ChatGPT</button>
+  
+          <!-- Copy Button -->
+          <!-- <LucideClipboardCopy class="cursor-pointer" @click="copyToClipboard" /> -->
+
+          <i data-lucide="copy" class="cursor-pointer" onclick="copyToClipboard('{{ prompt.content|escapejs }}', this)"></i>
+  
+        </div>
+      </div>
+    </div>
+
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+
+  function openChatGPT(content) {
+    const chatGPTURL = `https://chat.openai.com/?q=${encodeURIComponent(content)}`
+    window.open(chatGPTURL, '_blank')
+  }
+
+  function copyToClipboard(content, el) {
+    navigator.clipboard.writeText(content).then(() => {
+
+      // Toggle any selected icons
+      const icons = document.querySelectorAll('svg.lucide')
+      icons.forEach(icon => icon.setAttribute('data-lucide', 'copy'))
+      // Set the clicked button's icon
+      el.setAttribute('data-lucide', 'copy-check')
+      lucide.createIcons()
+      
+    }).catch(err => {
+      alert("Error copying text: " + err)
+    });
+  }
+
+
+</script>
+{% endblock %}

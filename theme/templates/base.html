@@ -1,0 +1,35 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    <title>Large English</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<script src="https://unpkg.com/lucide@latest"></script>
+		{% tailwind_css %}
+	</head>
+
+	<body>
+		<!-- NAVIGATION -->
+		<div class="navbar bg-base-100 shadow-sm">
+			<div class="flex-1">
+				<a class="btn btn-ghost text-xl">Large English</a>
+			</div>
+			<div class="flex-none">
+				<ul class="menu menu-horizontal px-1">
+					<li><a class="no-underline" href="/prompts">AI Drills</a></li>
+					<li><a class="no-underline" href="/posts">Blog</a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- MAIN CONTENT -->
+		<main class="container max-w-4xl mx-auto px-4 mt-6">
+			{% block content %}{% endblock %}
+		</main>
+		<script>
+			// Initialize Lucide Icons
+			lucide.createIcons();
+		</script>
+	</body>
+</html>
