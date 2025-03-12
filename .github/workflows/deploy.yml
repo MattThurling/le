@@ -34,7 +34,7 @@ jobs:
           gcloud run deploy le \
             --image gcr.io/large-english/le \
             --platform managed \
-            --region europe-west2 \
+            --region europe-west1 \
             --allow-unauthenticated \
             --set-env-vars DJANGO_ALLOWED_HOSTS=${{ secrets.DJANGO_ALLOWED_HOSTS }} \
             --set-env-vars DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
