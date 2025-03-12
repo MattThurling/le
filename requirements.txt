@@ -3,6 +3,5 @@ gunicorn
 psycopg2-binary
 python_dotenv
 dj_database_url
-django-ckeditor
 django-tailwind
-tinymce
+django-tinymce
