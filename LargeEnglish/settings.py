@@ -16,7 +16,7 @@ STORAGE_ROOT_URL = os.getenv("STORAGE_ROOT_URL")
 SECRET_KEY = 'django-insecure-%i)k$8pt1%f+e*&%3%$37u6x^!^udnkx((u+@xj%ed_oi415l7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
@@ -31,12 +31,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'whitenoise.runserver_nostatic',
     'website',
     'tinymce',
     'tailwind',
-    'django_browser_reload',
     'theme',
 ]
+
+if os.getenv("DEBUG", "False") == "True":  # Only add in development
+    INSTALLED_APPS.append('django_browser_reload')
 
 TAILWIND_APP_NAME = 'theme'
 
@@ -53,6 +56,7 @@ TINYMCE_DEFAULT_CONFIG = {
 }  
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -136,9 +140,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_DIRS = [] 
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # Default primary key field type

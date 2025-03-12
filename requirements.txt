@@ -6,3 +6,4 @@ dj_database_url
 django-tailwind
 django-tinymce
 django_browser_reload
+whitenoise
