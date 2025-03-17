@@ -1159,6 +1159,53 @@ a:focus-visible {
   --cardtitle-fs: 1.375rem;
 }
 
+.progress {
+  position: relative;
+  height: calc(0.25rem * 2);
+  width: 100%;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  overflow: hidden;
+  border-radius: var(--radius-box);
+  background-color: color-mix(in oklab, currentColor 20%, transparent);
+  color: var(--color-base-content);
+}
+
+.progress:indeterminate {
+  background-image: repeating-linear-gradient( 90deg, currentColor -1%, currentColor 10%, #0000 10%, #0000 90% );
+  background-size: 200%;
+  background-position-x: 15%;
+  animation: progress 5s ease-in-out infinite;
+}
+
+@supports (-moz-appearance: none) {
+  .progress:indeterminate::-moz-progress-bar {
+    background-color: transparent;
+    background-image: repeating-linear-gradient( 90deg, currentColor -1%, currentColor 10%, #0000 10%, #0000 90% );
+    background-size: 200%;
+    background-position-x: 15%;
+    animation: progress 5s ease-in-out infinite;
+  }
+
+  .progress::-moz-progress-bar {
+    border-radius: var(--radius-box);
+    background-color: currentColor;
+  }
+}
+
+@supports (-webkit-appearance: none) {
+  .progress::-webkit-progress-bar {
+    border-radius: var(--radius-box);
+    background-color: transparent;
+  }
+
+  .progress::-webkit-progress-value {
+    border-radius: var(--radius-box);
+    background-color: currentColor;
+  }
+}
+
 @keyframes progress {
   50% {
     background-position-x: -115%;
@@ -1364,6 +1411,62 @@ a:focus-visible {
 .btn-ghost:not(.btn-active, :hover, :active:focus, :focus-visible):not(:disabled, [disabled], .btn-disabled) {
   outline-color: currentColor;
   --btn-fg: currentColor;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.875rem;
+}
+
+.list :where(.list-row) {
+  --list-grid-cols: minmax(0, auto) 1fr;
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  gap: calc(0.25rem * 4);
+  border-radius: var(--radius-box);
+  padding: calc(0.25rem * 4);
+  word-break: break-word;
+  grid-template-columns: var(--list-grid-cols);
+}
+
+.list :where(.list-row):has(.list-col-grow:nth-child(1)) {
+  --list-grid-cols: 1fr;
+}
+
+.list :where(.list-row):has(.list-col-grow:nth-child(2)) {
+  --list-grid-cols: minmax(0, auto) 1fr;
+}
+
+.list :where(.list-row):has(.list-col-grow:nth-child(3)) {
+  --list-grid-cols: minmax(0, auto) minmax(0, auto) 1fr;
+}
+
+.list :where(.list-row):has(.list-col-grow:nth-child(4)) {
+  --list-grid-cols: minmax(0, auto) minmax(0, auto) minmax(0, auto) 1fr;
+}
+
+.list :where(.list-row):has(.list-col-grow:nth-child(5)) {
+  --list-grid-cols: minmax(0, auto) minmax(0, auto) minmax(0, auto) minmax(0, auto) 1fr;
+}
+
+.list :where(.list-row):has(.list-col-grow:nth-child(6)) {
+  --list-grid-cols: minmax(0, auto) minmax(0, auto) minmax(0, auto) minmax(0, auto)
+        minmax(0, auto) 1fr;
+}
+
+.list :where(.list-row) :not(.list-col-wrap) {
+  grid-row-start: 1;
+}
+
+.list > :not(:last-child).list-row:after, .list > :not(:last-child) .list-row:after {
+  content: "";
+  border-bottom: var(--border) solid;
+  inset-inline: var(--radius-box);
+  position: absolute;
+  bottom: calc(0.25rem * 0);
+  border-color: color-mix(in oklab, var(--color-base-content) 5%, transparent);
 }
 
 .divider {
@@ -1716,6 +1819,10 @@ a:focus-visible {
   gap: 1.5rem;
 }
 
+.rounded-box {
+  border-radius: var(--radius-box);
+}
+
 .rounded-t-lg {
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
@@ -1739,6 +1846,10 @@ a:focus-visible {
      object-fit: cover;
 }
 
+.p-4 {
+  padding: 1rem;
+}
+
 .px-1 {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
@@ -1747,6 +1858,10 @@ a:focus-visible {
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+.pb-2 {
+  padding-bottom: 0.5rem;
 }
 
 .text-center {
@@ -1768,12 +1883,21 @@ a:focus-visible {
   line-height: 1.75rem;
 }
 
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
 .font-bold {
   font-weight: 700;
 }
 
 .font-semibold {
   font-weight: 600;
+}
+
+.tracking-wide {
+  letter-spacing: 0.025em;
 }
 
 .text-base-content {
@@ -1784,10 +1908,24 @@ a:focus-visible {
   text-decoration-line: none;
 }
 
+.opacity-60 {
+  opacity: 0.6;
+}
+
+.shadow-md {
+  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
 .shadow-sm {
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.rounded-box {
+  border-radius: var(--radius-box);
 }
 
 .youtube-embed {

@@ -7,4 +7,6 @@ urlpatterns = [
   path('pages/', views.page_list, name='page_list'),
   path('posts/', views.post_list, name='post_list'),
   path('posts/<slug:slug>/', views.post_detail, name='post_detail'),
+  path('progress/', views.ProgressView.as_view(), name='progress'),
+  path('submit-timelog/', views.SubmitTimeLogView.as_view(), name='submit_timelog'),
 ]
