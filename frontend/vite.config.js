@@ -12,7 +12,13 @@ export default defineConfig({
     outDir: '../static/dist',  // Output directory for Django to use
     emptyOutDir: true,
     rollupOptions: {
-      input: './src/main.js'
+      input: './src/main.js',
+      // Since Python collectstatic handles manifests, there is no need to add unique ids
+      output: {
+        entryFileNames: 'assets/[name].js',
+        chunkFileNames: 'assets/[name].js',
+        assetFileNames: 'assets/[name][extname]'
+      }
     }
   },
   resolve: {
