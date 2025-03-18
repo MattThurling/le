@@ -77,6 +77,10 @@ TEMPLATES = [
     },
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://largeenglish.com",
+]
+
 WSGI_APPLICATION = 'LargeEnglish.wsgi.application'
 
 
