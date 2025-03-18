@@ -1,32 +1,12 @@
 {% extends "base.html" %}
+
 {% block content %}
-    <header class="text-center">
-        <h1 class="text-4xl font-bold">Progress</h1>
-    </header>
-
-    <form method="post" action="{% url 'submit_timelog' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit TimeLog</button>
-    </form>
-
-
-    <ul class="list bg-base-100 rounded-box shadow-md">
-        <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Time Logs</li>
-        {% for log in request.user.time_logs.all %}
-        <li class="list-row">
-            <div>
-            {{ log.date }}
-            </div>
-            <div>
-            {{ log.activity }}
-            </div>
-            <div>
-            {{ log.duration }}
-            </div>
-        </li>
-        {% empty %}
-            <li>No time logs yet.</li>
-        {% endfor %}
-    <ul>
+<body>
+    <h1 class="text text-4xl">I am Django</h1>
+    <button class="btn btn-outline btn-info">Hit me</button>
+    <hr>
+    <div id="vue-app">
+        <my-component></my-component>
+    </div>
+</body>
 {% endblock %}

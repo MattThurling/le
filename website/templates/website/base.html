@@ -1,4 +1,4 @@
-{% load static tailwind_tags %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -7,7 +7,17 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<script src="https://unpkg.com/lucide@latest"></script>
-		{% tailwind_css %}
+        {% if debug %}
+            <!-- ✅ Dev mode: Load from Vite -->
+            <script type="module" src="http://localhost:5173/@vite/client"></script>
+            <script type="module" src="http://localhost:5173/src/main.js"></script>
+            <link rel="stylesheet" href="http://localhost:5173/src/styles.css">
+        {% else %}
+            <!-- ✅ Production mode: Load from Django static -->
+            <script type="module" src="{% static 'main.js' %}"></script>
+			<script type="module" src="{% static 'twat.js' %}"></script>
+            <link rel="stylesheet" href="{% static 'main.css' %}">
+        {% endif %}
 	</head>
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-XCG544PNW2"></script>
@@ -21,6 +31,7 @@
 
 	<body>
 		<!-- NAVIGATION -->
+
 		<div class="navbar bg-base-100 shadow-sm">
 			<div class="flex-1">
 				<a class="btn btn-ghost text-xl" href="/">Large English</a>
@@ -37,6 +48,7 @@
 		</div>
 		<!-- MAIN CONTENT -->
 		<main class="container max-w-4xl mx-auto px-4 mt-6">
+			{{ debug }}
 			{% block content %}{% endblock %}
 		</main>
 		<script>

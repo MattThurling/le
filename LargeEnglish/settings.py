@@ -2,9 +2,6 @@ from pathlib import Path
 from dotenv import load_dotenv
 import os
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -35,14 +32,9 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'website',
     'tinymce',
-    'tailwind',
-    'theme',
 ]
 
-if os.getenv("DEBUG", "False") == "True":  # Only add in development
-    INSTALLED_APPS.append('django_browser_reload')
 
-TAILWIND_APP_NAME = 'theme'
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -65,7 +57,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = 'LargeEnglish.urls'
@@ -73,7 +64,7 @@ ROOT_URLCONF = 'LargeEnglish.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "theme/templates"], 
+        'DIRS': [BASE_DIR / "website/templates/website"], 
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -145,7 +136,7 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-STATICFILES_DIRS = [] 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static/dist/assets")]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 

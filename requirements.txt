@@ -3,7 +3,5 @@ gunicorn
 psycopg2-binary
 python_dotenv
 dj_database_url
-django-tailwind
 django-tinymce
-django_browser_reload
 whitenoise
