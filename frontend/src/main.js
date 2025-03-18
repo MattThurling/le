@@ -1,6 +1,7 @@
 import './styles.css'
 import { createApp } from 'vue'
-import MyComponent from './MyComponent.vue'
+import Progress from './Progress.vue'
 
-const app = createApp(MyComponent)
+
+const app = createApp(Progress)
 app.mount('#vue-app')

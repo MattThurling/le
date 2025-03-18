@@ -5,3 +5,5 @@ python_dotenv
 dj_database_url
 django-tinymce
 whitenoise
+djangorestframework
+django-cors-headers
