@@ -9,4 +9,7 @@ urlpatterns = [
   path('posts/<slug:slug>/', views.post_detail, name='post_detail'),
   path('progress/', views.ProgressView.as_view(), name='progress'),
   path('submit-timelog/', views.SubmitTimeLogView.as_view(), name='submit_timelog'),
+  path('register/', views.register_view, name='register'),
+  path('login/', views.CustomLoginView.as_view(), name='login'),
+
 ]

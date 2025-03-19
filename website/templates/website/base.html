@@ -15,7 +15,6 @@
         {% else %}
             <!-- ✅ Production mode: Load from Django static -->
             <script type="module" src="{% static 'main.js' %}"></script>
-			<script type="module" src="{% static 'twat.js' %}"></script>
             <link rel="stylesheet" href="{% static 'main.css' %}">
         {% endif %}
 	</head>
@@ -33,7 +32,7 @@
 		<!-- NAVIGATION -->
 		<div class="navbar bg-base-100 shadow-sm">
 			<div class="flex-1">
-				<a class="btn btn-ghost text-xl" href="/">Large English</a>
+				<p class="text font-bold"><a href="/">Large English</a></p>
 			</div>
 			<div class="flex-none">
 				<ul class="menu menu-horizontal px-1">

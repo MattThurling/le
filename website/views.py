@@ -3,8 +3,36 @@ from .models import Prompt, Page, Post, TimeLog
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, FormView
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
 from .forms import TimeLogForm
+from django.contrib.auth import login
+from .forms import RegisterForm
+from django.contrib.auth.views import LoginView
+
+def register_view(request):
+    if request.user.is_authenticated:  # Redirect if already logged in
+        return redirect('progress')
+
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # Log in the user after registering
+            return redirect('progress')
+        else:
+            print("Form errors:", form.errors)
+    else:
+        form = RegisterForm()
+    
+    return render(request, 'registration/register.html', {'form': form})
+
+class CustomLoginView(LoginView):
+    template_name = 'registration/login.html'
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:  # Redirect if already logged in
+            return redirect('progress')
+        return super().get(request, *args, **kwargs)
 
 @method_decorator(login_required, name='dispatch')
 class ProgressView(TemplateView):

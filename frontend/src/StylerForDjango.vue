@@ -12,5 +12,9 @@
         <div class="text-center text-4xl font-bold text-base-content my-4 youtube-embed mt-8">
             INDEX
         </div>
+
+        <div class="flex justify-center items-center h-screen card w-96 bg-base-100 shadow-xl p-6 text-2xl font-bold text-center mb-4 space-y-4 form-control label label-text input input-bordered w-full text-red-500 text-sm mt-1 btn btn-primary w-full text-center text-sm mt-4 text-blue-500">
+            REGISTER
+        </div>
     </div>
 </template>

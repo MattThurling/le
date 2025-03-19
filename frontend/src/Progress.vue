@@ -1,33 +1,77 @@
 <template>
   <div>
 
-    <div class="flex flex-col sm:flex-row gap-4">
-      <div class="w-full sm:w-1/2">
-          <canvas ref="barChartCanvas"></canvas>
+    <div class="flex flex-row gap-4 mt-10">
+      <div class="w-1/2 text-center">
+        <p class="text text-xs">Current level:</p>
+        <h2 class="text text-4xl font-bold text-neutral-content mt-3">B1</h2>
       </div>
-      <div class="w-full sm:w-1/2">
-          <canvas ref="doughnutChartCanvas"></canvas>
+      <div class="w-1/2 text-center">
+        <p class="text text-xs">Goal:</p>
+        <h2 class="text text-4xl font-bold text-secondary mt-3">B2</h2>
+      </div>
+    </div>
+
+    <div class="text-center mt-8">
+      <p class="text">
+        I don't care how smart you are. This is an ambitious goal and, according to the Institute of Studies, it's going to take you <strong>300 hours</strong>.
+      </p>
+    </div>
+
+    <div class="text-center mt-8">
+      <p class="text text-xs">
+        Progress
+      </p>
+    </div>
+
+    <progress class="progress progress-secondary w-full mt-4" :value="totalDuration" max="18000"></progress>
+  
+    <div class="text-center mt-8">
+      <p class="text">
+        The good news is that some - or even all - of it should be fun. Just because you enjoy it doesn't mean it doesn't count.
+      </p>
+    </div>
+
+
+
+    <div class="divider"></div>
+
+    <div class="text-center my-6">
+      <p class="text text-xs">
+        Record a study activity
+      </p>
+    </div>
+
+    <div class="flex flex-col md:flex-row gap-4 w-full">
+      <input type="date" v-model="newTimeLog.date" class="input w-full md:w-[20%]" required />
+
+      <input type="text" v-model="newTimeLog.activity" placeholder="Activity" class="input w-full md:w-[40%]" required />
+
+      <div class="w-full md:w-[15%]">
+        <input type="number" v-model="newTimeLog.duration" class="input w-full" required placeholder="Minutes" />
+      </div>
+
+      <div class="w-full md:w-[25%]">
+        <button @click="submitTimeLog" class="btn btn-primary w-full">Log study time</button>
       </div>
     </div>
 
     <div class="divider"></div>
 
-    <div>
-      <input type="date" v-model="newTimeLog.date" class="input" required />
+    <div class="justify-center">
+      <canvas ref="doughnutChartCanvas"></canvas>
     </div>
 
-    <div class="mt-4">
-      <input type="text" v-model="newTimeLog.activity" placeholder="Activity" class="input" required />
-    </div>
+    <div class="divider"></div>
 
-    <div class="mt-4">
-      <input type="number" v-model="newTimeLog.duration" class="input validator" required placeholder="Minutes" min="1" max="1440" title="Must be between 1 and 1440" />
-      <p class="validator-hint">Must be between 1 and 1440</p>
-    </div>
-
-    <div class="mt-4">
-      <button @click="submitTimeLog" class="btn btn-wide btn-primary">Log study time</button>
-    </div>  
+    <!-- <div class="flex flex-col sm:flex-row gap-4">
+      <div class="w-full sm:w-1/2">
+          <canvas ref="barChartCanvas"></canvas>
+      </div>
+      <div class="w-full sm:w-1/2">
+          
+      </div>
+    </div> -->
     
     <div class="mt-4">
       <ul class="list bg-base-100 rounded-box shadow-md">
@@ -50,7 +94,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, computed } from 'vue';
 import api from './api';
 import Chart from 'chart.js/auto';
 
@@ -62,6 +106,10 @@ const barChartCanvas = ref(null);
 const doughnutChartCanvas = ref(null);
 let barChartInstance = null;
 let doughnutChartInstance = null;
+
+const totalDuration = computed(() => {
+  return timelogs.value.reduce((sum, log) => sum + (log.duration || 0), 0);
+});
 
 const fetchTimeLogs = async () => {
   try {
@@ -168,23 +216,41 @@ const updateDoughnutChart = () => {
           backgroundColor: [
             'rgb(255, 99, 132)',
             'rgb(54, 162, 235)',
-            'rgb(255, 205, 86)'
-          ]
+            'rgb(255, 205, 86)',
+            'rgb(75, 192, 192)',  
+            'rgb(153, 102, 255)',  
+            'rgb(255, 159, 64)',  
+            'rgb(201, 203, 207)',  
+            'rgb(0, 128, 128)',  
+            'rgb(220, 20, 60)',  
+            'rgb(34, 139, 34)',  
+            'rgb(255, 140, 0)',  
+            'rgb(123, 104, 238)',
+          ],
+          borderWidth: 0,
         }
       ]
     },
     options: {
       responsive: true,
-      maintainAspectRatio: false
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: "left",
+          labels: {
+            usePointStyle: true, // Use small circles
+            pointStyle: "circle",
+          },
+        },
+      }
     }
   });
 };
 
 // Fetch data when the component is mounted
 onMounted(async () => {
-
   await fetchTimeLogs();
-  updateBarChart(); // Initialize bar chart after fetching data
+  // updateBarChart(); // Initialize bar chart after fetching data
   updateDoughnutChart(); // Initialize doughnut chart after fetching data
 });
 

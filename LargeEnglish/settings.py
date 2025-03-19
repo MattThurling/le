@@ -19,7 +19,8 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
-
+LOGIN_REDIRECT_URL = '/'  # Redirect after successful login
+LOGOUT_REDIRECT_URL = '/login/'  # Redirect after logout
 
 # Application definition
 
@@ -35,7 +36,6 @@ INSTALLED_APPS = [
     'website',
     'tinymce',
     'rest_framework',
-    'corsheaders',
 ]
 
 REST_FRAMEWORK = {
@@ -63,7 +63,6 @@ TINYMCE_DEFAULT_CONFIG = {
 }  
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -92,10 +91,7 @@ TEMPLATES = [
     },
 ]
 
-CORS_ALLOW_CREDENTIALS = True  # Allows Vue to send authentication cookies
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Vue app running locally
-]
+
 
 CSRF_TRUSTED_ORIGINS = [
     "https://largeenglish.com",
