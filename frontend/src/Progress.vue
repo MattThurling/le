@@ -14,7 +14,7 @@
 
     <div class="text-center mt-8">
       <p class="text">
-        I don't care how smart you are. This is an ambitious goal and, according to the Institute of Studies, it's going to take you <strong>300 hours</strong>.
+        This is going to take you <strong>300 hours</strong>. I don't care how smart you are.
       </p>
     </div>
 
@@ -28,7 +28,7 @@
   
     <div class="text-center mt-8">
       <p class="text">
-        The good news is that some - or even all - of it should be fun. Just because you enjoy it doesn't mean it doesn't count.
+        The good news is that some - or even all - of it should be fun. It all counts!
       </p>
     </div>
 

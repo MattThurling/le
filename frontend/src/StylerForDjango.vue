@@ -16,5 +16,9 @@
         <div class="flex justify-center items-center h-screen card w-96 bg-base-100 shadow-xl p-6 text-2xl font-bold text-center mb-4 space-y-4 form-control label label-text input input-bordered w-full text-red-500 text-sm mt-1 btn btn-primary w-full text-center text-sm mt-4 text-blue-500">
             REGISTER
         </div>
+
+        <div class="hero bg-base-200 min-h-[50vh] hero-content text-center max-w-md text-5xl font-bold py-6">
+            HOME
+        </div>
     </div>
 </template>
