@@ -16,18 +16,20 @@
 <div class="mt-10">
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
     {% for prompt in prompts %}
-    <!-- <div class="card">{{ prompt.title }}: {{ prompt.content }}</div> -->
-
-    <div class="card card-sm border border-gray-700">
-      <!-- Image Section -->
-      <figure>
+    <div class="card card-sm border border-gray-700 relative">
+      <!-- Image Section with Badge -->
+      <figure class="relative">
         <img
           src="{{ prompt.image_url }}"
           class="w-full h-40 object-cover rounded-t-lg"
           alt="Prompt image"
         />
+        <!-- Badge (Overlaying Image) -->
+        <div class="badge badge-soft badge-info absolute top-2 right-2">
+          {{ prompt.level }}
+        </div>
       </figure>
-  
+
       <div class="card-body">
         <!-- Title -->
         <h2 class="card-title text-lg font-semibold">{{ prompt.title }}</h2>
@@ -35,20 +37,19 @@
         <!-- Action Buttons -->
         <div class="flex items-center gap-3 mt-3">
           <!-- ChatGPT Button -->
-          <button class="btn btn-primary" onclick="openChatGPT('{{ prompt.content|escapejs }}')">Open in ChatGPT</button>
+          <button class="btn btn-primary" onclick="openChatGPT('{{ prompt.content|escapejs }}')">
+            Open in ChatGPT
+          </button>
   
           <!-- Copy Button -->
-          <!-- <LucideClipboardCopy class="cursor-pointer" @click="copyToClipboard" /> -->
-
           <i data-lucide="copy" class="cursor-pointer" onclick="copyToClipboard('{{ prompt.content|escapejs }}', this)"></i>
-  
         </div>
       </div>
     </div>
-
     {% endfor %}
   </div>
 </div>
+
 
 <script>
 
