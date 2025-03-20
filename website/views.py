@@ -58,7 +58,7 @@ def prompt_list(request):
     if org_filter:
       prompts = Prompt.objects.filter(organisation=org_filter)
     else:
-      prompts = Prompt.objects.filter(organisation__isnull=True)  # Only return NULL results if no 'o' is provided
+      prompts = Prompt.objects.filter(organisation__isnull=True)
     return render(request, 'website/prompts.html', {'prompts': prompts})
 
 def page_list(request):
