@@ -32,6 +32,7 @@ class Prompt(ImageModel):
   image = models.CharField(max_length=255)
   # Temporary hack for demo purposes. To be replaced with proper reference to user and organisation
   organisation = models.CharField(max_length=255, null=True,blank=True)
+  level = models.CharField(max_length=8, null=True,blank=True)
   
   def __str__(self):
     return self.title
