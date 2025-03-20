@@ -54,8 +54,12 @@ def index(request):
   return render(request, 'website/index.html')
 
 def prompt_list(request):
-  prompts = Prompt.objects.all()
-  return render(request, 'website/prompts.html', {'prompts': prompts})
+    org_filter = request.GET.get('o', None)  # Get the 'o' parameter from the URL
+    if org_filter:
+      prompts = Prompt.objects.filter(organisation=org_filter)
+    else:
+      prompts = Prompt.objects.filter(organisation__isnull=True)  # Only return NULL results if no 'o' is provided
+    return render(request, 'website/prompts.html', {'prompts': prompts})
 
 def page_list(request):
   pages = Page.objects.all()
