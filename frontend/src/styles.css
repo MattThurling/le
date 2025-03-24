@@ -1,22 +1,13 @@
 @import "tailwindcss";
 @plugin "daisyui";
+ 
+.bg-a1 { background-color: #79A8E6; }
+.bg-a2 { background-color: #4781E6; }
+.bg-b1 { background-color: #FFb736; }
+.bg-b2 { background-color: #FF9134; }
+.bg-c1 { background-color: #CC00CC; }
+.bg-c2 { background-color: #800080; }
 
-.navbar {}
-.bg-base-100 {}
-.shadow-sm {}
-.flex-1 {}
-.btn {}
-.btn-ghost {}
-.text-xl {}
-.flex-none {}
-.menu {}
-.menu-horizontal {}
-.px-1 {}
-.no-underline {}
-.container {}
-.max-w-4xl {}
-.mx-auto {}
-.px-4 {}
-.mt-6 {}
+
 
 
