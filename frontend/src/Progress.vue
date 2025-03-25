@@ -63,15 +63,6 @@
     </div>
 
     <div class="divider"></div>
-
-    <!-- <div class="flex flex-col sm:flex-row gap-4">
-      <div class="w-full sm:w-1/2">
-          <canvas ref="barChartCanvas"></canvas>
-      </div>
-      <div class="w-full sm:w-1/2">
-          
-      </div>
-    </div> -->
     
     <div class="mt-4">
       <ul class="list bg-base-100 rounded-box shadow-md">
@@ -128,7 +119,7 @@ const submitTimeLog = async () => {
 
   try {
     const response = await api.post('timelogs/', newTimeLog.value);
-    timelogs.value.push(response.data); // Update the UI with the new log
+    await fetchTimeLogs();  // explicitly refresh from server
     newTimeLog.value = { date: '', activity: '', duration: '' }; // Reset input fields
   } catch (error) {
     console.error('Error adding timelog:', error);
@@ -142,49 +133,6 @@ const formatDate = (dateString) => {
   if (isNaN(date)) return 'Invalid Date'; // Handle invalid dates
 
   return new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short' }).format(date);
-};
-
-// Function to create/update the bar chart
-const updateBarChart = () => {
-  if (!barChartCanvas.value || timelogs.value.length === 0) return;
-
-  const labels = timelogs.value.map(log => log.date || 'Unknown'); // Extract dates
-  const values = timelogs.value.map(log => log.duration || 0); // Extract logged hours
-
-  // Destroy previous instance if it exists
-  if (barChartInstance) {
-    barChartInstance.destroy();
-  }
-
-  barChartInstance = new Chart(barChartCanvas.value, {
-    type: 'bar',
-    data: {
-      labels,
-      datasets: [
-        {
-          label: '',
-          data: values,
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-            legend: {
-                display: false // Hides the legend
-            }
-      },
-      scales: {
-            x: {
-                display: false // Hides the x-axis labels
-            }
-          }
-    }
-  });
 };
 
 // Function to create/update the doughnut chart
@@ -250,13 +198,11 @@ const updateDoughnutChart = () => {
 // Fetch data when the component is mounted
 onMounted(async () => {
   await fetchTimeLogs();
-  // updateBarChart(); // Initialize bar chart after fetching data
   updateDoughnutChart(); // Initialize doughnut chart after fetching data
 });
 
 // Watch for changes in timelogs and update the charts dynamically
 watch(timelogs, () => {
-  updateBarChart();
   updateDoughnutChart();
 }, { deep: true });
 
