@@ -2,12 +2,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.contrib.sitemaps.views import sitemap
-from website.sitemaps import StaticViewSitemap, PostSitemap
+from website.sitemaps import StaticViewSitemap, PostSitemap, PromptSitemap
 
 sitemaps = {
     'static': StaticViewSitemap(),
     'Post': PostSitemap(),
-
+    'Prompt': PromptSitemap(),
 }
 
 urlpatterns = [
