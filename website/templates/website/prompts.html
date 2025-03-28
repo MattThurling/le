@@ -32,7 +32,9 @@
 
       <div class="card-body">
         <!-- Title -->
-        <h2 class="card-title text-lg font-semibold">{{ prompt.title }}</h2>
+        <a href="{% url 'prompt_detail' slug=prompt.slug %}">
+          <h2 class="card-title text-lg font-semibold">{{ prompt.title }}</h2>
+        </a>
   
         <!-- Action Buttons -->
         <div class="flex items-center gap-3 mt-3">

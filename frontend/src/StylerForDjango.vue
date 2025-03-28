@@ -9,6 +9,10 @@
             PROMPTS
         </div>
 
+        <div class="ml-4 btn-xl mb-1 text-lg mt-6 flex text-xl items-center space-x-4 ml-1 text-xs text-right bg-base-200 p-4 container mx-auto flex flex-col md:flex-row gap-4 items-start md:w-2/3 w-full text-4xl font-bold mb-2 md:w-1/3 rounded-xl overflow-hidden shadow-md w-full h-auto object-cover mt-6 prose max-w-none">
+            PROMPT
+        </div>
+
         <div class="text-center text-4xl font-bold text-base-content my-4 youtube-embed mt-8">
             INDEX
         </div>
