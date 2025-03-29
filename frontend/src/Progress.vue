@@ -4,17 +4,21 @@
     <div class="flex flex-row gap-4 mt-10">
       <div class="w-1/2 text-center">
         <p class="text text-xs">Current level:</p>
-        <h2 class="text text-4xl font-bold text-neutral-content mt-3">B1</h2>
+        <div class="badge badge-xl border-none text-white font-bold mt-3" :class="`bg-${user.current_level.code.toLowerCase()}`">
+          {{ user.current_level.code }}
+        </div>
       </div>
       <div class="w-1/2 text-center">
         <p class="text text-xs">Goal:</p>
-        <h2 class="text text-4xl font-bold text-secondary mt-3">B2</h2>
+        <div class="badge badge-xl border-none text-white font-bold mt-3" :class="`bg-${user.next_level.code.toLowerCase()}`">
+          {{ user.next_level.code }}
+        </div>
       </div>
     </div>
 
     <div class="text-center mt-8">
       <p class="text">
-        This is going to take you <strong>300 hours</strong>. I don't care how smart you are.
+        This is going to take you <strong>{{ user.next_level.study }} hours</strong>, {{ user.username }}. I don't care how smart you are.
       </p>
     </div>
 
@@ -24,7 +28,7 @@
       </p>
     </div>
 
-    <progress class="progress progress-secondary w-full mt-4" :value="totalDuration" max="18000"></progress>
+    <progress class="progress progress-secondary w-full mt-4" :value="totalDuration" :max="(user.next_level.study * 60)"></progress>
   
     <div class="text-center mt-8">
       <p class="text">
@@ -85,72 +89,82 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, computed } from 'vue';
-import api from './api';
-import Chart from 'chart.js/auto';
+import { ref, onMounted, watch, computed } from 'vue'
+import api from './api'
+import Chart from 'chart.js/auto'
 
-const timelogs = ref([]);  // Reactive state for storing fetched timelogs
-const newTimeLog = ref({ date: '', activity: '', duration: '' });
+const timelogs = ref([])  // Reactive state for storing fetched timelogs
+const user = ref({current_level: {code: '', study: 1}, next_level: {code: '', study: 1} })
+const newTimeLog = ref({ date: '', activity: '', duration: '' })
 
 // Chart.js references
-const barChartCanvas = ref(null);
-const doughnutChartCanvas = ref(null);
-let barChartInstance = null;
-let doughnutChartInstance = null;
+const barChartCanvas = ref(null)
+const doughnutChartCanvas = ref(null)
+let barChartInstance = null
+let doughnutChartInstance = null
 
 const totalDuration = computed(() => {
-  return timelogs.value.reduce((sum, log) => sum + (log.duration || 0), 0);
-});
+  return timelogs.value.reduce((sum, log) => sum + (log.duration || 0), 0)
+})
+
+const fetchUser = async () => {
+  try {
+    const response = await api.get('user')
+    user.value = response.data
+  } catch (error) {
+    console.error('Error fetching user:', error)
+  }
+}
 
 const fetchTimeLogs = async () => {
   try {
-    const response = await api.get('timelogs/');
-    timelogs.value = response.data;  // Update the reactive state
+    const response = await api.get('timelogs/')
+    timelogs.value = response.data // Update the reactive state
   } catch (error) {
-    console.error('Error fetching timelogs:', error);
+    console.error('Error fetching timelogs:', error)
   }
 };
 
 const submitTimeLog = async () => {
   if (!newTimeLog.value.date || !newTimeLog.value.activity || !newTimeLog.value.duration) {
-    alert("Please fill out all fields.");
-    return;
+    alert("Please fill out all fields.")
+    return
   }
 
   try {
-    const response = await api.post('timelogs/', newTimeLog.value);
-    await fetchTimeLogs();  // explicitly refresh from server
-    newTimeLog.value = { date: '', activity: '', duration: '' }; // Reset input fields
+    const response = await api.post('timelogs/', newTimeLog.value)
+    await fetchTimeLogs()  // explicitly refresh from server
+    newTimeLog.value = { date: '', activity: '', duration: '' } // Reset input fields
   } catch (error) {
-    console.error('Error adding timelog:', error);
+    console.error('Error adding timelog:', error)
   }
 };
 
 const formatDate = (dateString) => {
-  if (!dateString) return 'Unknown';
+  if (!dateString) return 'Unknown'
   
-  const date = new Date(dateString);
-  if (isNaN(date)) return 'Invalid Date'; // Handle invalid dates
+  const date = new Date(dateString)
+  if (isNaN(date)) return 'Invalid Date' // Handle invalid dates
 
-  return new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short' }).format(date);
+  return new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short' }).format(date)
 };
 
 // Function to create/update the doughnut chart
 const updateDoughnutChart = () => {
-  if (!doughnutChartCanvas.value || timelogs.value.length === 0) return;
+  if (!doughnutChartCanvas.value || timelogs.value.length === 0) return
 
   // Aggregate total hours per activity
   const activityTotals = timelogs.value.reduce((acc, log) => {
     acc[log.activity] = (acc[log.activity] || 0) + log.duration;
     return acc;
-  }, {});
+  }, {})
 
-  const labels = Object.keys(activityTotals); // Activity names
-  const values = Object.values(activityTotals); // Total hours per activity
+  const labels = Object.keys(activityTotals) // Activity names
+  const values = Object.values(activityTotals) // Total hours per activity
 
   // Destroy previous instance if it exists
   if (doughnutChartInstance) {
-    doughnutChartInstance.destroy();
+    doughnutChartInstance.destroy()
   }
 
   doughnutChartInstance = new Chart(doughnutChartCanvas.value, {
@@ -192,18 +206,19 @@ const updateDoughnutChart = () => {
         },
       }
     }
-  });
-};
+  })
+}
 
 // Fetch data when the component is mounted
 onMounted(async () => {
-  await fetchTimeLogs();
-  updateDoughnutChart(); // Initialize doughnut chart after fetching data
+  await fetchUser()
+  await fetchTimeLogs()
+  updateDoughnutChart() // Initialize doughnut chart after fetching data
 });
 
 // Watch for changes in timelogs and update the charts dynamically
 watch(timelogs, () => {
-  updateDoughnutChart();
-}, { deep: true });
+  updateDoughnutChart()
+}, { deep: true })
 
 </script>
