@@ -78,7 +78,7 @@ ROOT_URLCONF = 'LargeEnglish.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "website/templates/website"], 
+        'DIRS': [BASE_DIR / "frontend/src/templates"], 
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
