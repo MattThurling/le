@@ -1,6 +1,7 @@
-from rest_framework import viewsets, permissions
+from rest_framework import views, viewsets, permissions, response
 from website.models import TimeLog
-from .serializers import TimeLogSerializer
+from django.contrib.auth.models import User
+from .serializers import TimeLogSerializer, UserSerializer
 
 class TimeLogViewSet(viewsets.ModelViewSet):
     serializer_class = TimeLogSerializer
@@ -11,3 +12,10 @@ class TimeLogViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+class CurrentUserAPIView(views.APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return response.Response(serializer.data)
