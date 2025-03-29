@@ -1,13 +1,12 @@
 Django application with combination of web templates and Vue Components on the Front End.
 
-To deploy, first build frontend assets
+To run front end assets for development
 
 cd frontend
 
-npm run build
+npm run dev
 
 Notes:
 
-- At the moment, styles used in Django templates need to be referenced in StylerForDjango component, until I find a way to get Vite (and Rollup) to watch for them.
-
-- Was having a problem referencing front end assets so disable cache busting hashes in Vite.  
+- Was having a problem referencing front end assets so disabled cache busting hashes in Vite.
+- Django templates are in the frontend folder so that style changes are picked up by Vite.
