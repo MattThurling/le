@@ -104,6 +104,13 @@ class Attainment(BaseModel):
   def __str__(self):
     return self.user.username + ' : ' + self.level.code
 
+class Organisation(models.Model):
+  name = models.CharField(max_length=100)
+  domain = models.CharField(max_length=255, unique=True)
+
+  def __str__(self):
+      return self.name
+
 # Simple method on User model
 def get_attainments(self):
   return self.attainments.select_related('level').all()
