@@ -17,7 +17,11 @@ STORAGE_ROOT_URL = os.getenv("STORAGE_ROOT_URL")
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY")
 
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+ALLOWED_HOSTS = [
+    "largeenglish.com",
+    "127.0.0.1",
+    "le-330018731817.europe-west1.run.app",
+    ]
 
 LOGIN_REDIRECT_URL = '/'  # Redirect after successful login
 LOGOUT_REDIRECT_URL = '/login/'  # Redirect after logout
