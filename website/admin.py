@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Prompt, Page, Post, TimeLog, Level, Attainment
+from .models import Prompt, Page, Post, TimeLog, Level, Attainment, Organisation
 
 # Common admin config
 class BaseAdmin(admin.ModelAdmin):
@@ -19,6 +19,6 @@ class TimeLogAdmin(admin.ModelAdmin):
     list_filter = ('created_at',)
     ordering = ('-created_at',)
 
-@admin.register(Level, Attainment)
+@admin.register(Level, Attainment, Organisation)
 class LevelAdmin(admin.ModelAdmin):
     pass
