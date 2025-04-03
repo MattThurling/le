@@ -1,13 +1,13 @@
 import json
-from website.models import Prompt, Organisation, User, Language
+from website.models import Prompt, Organisation, User, Language, Level
 
 with open('prompts.json', 'r') as file:
     data = json.load(file)
 
 
 for entry in data:
-    user = User.objects.get(username="Matt")
-    level = Level.objects.get(name=entry["level"])
+    user = User.objects.get(username="Eric")
+    level = Level.objects.get(code=entry["level"])
     if entry["organisation"] == "french":
         language = Language.objects.get(name="French")
     else:
@@ -17,6 +17,6 @@ for entry in data:
         content=entry["content"],
         user = user,
         language = language,
-        level = entry["level"],
-        image = level,
+        level = level,
+        image = entry["image"],
     )

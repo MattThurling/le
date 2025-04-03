@@ -54,7 +54,9 @@ def index(request):
   return render(request, 'website/index.html')
 
 def prompt_list(request):
-  prompts = Prompt.objects.filter(user__organisation=request.organisation)
+  # prompts = Prompt.objects.filter(user__organisation=request.organisation)
+  # For now, show all the prompts in the org's main language
+  prompts = Prompt.objects.filter(language=request.organisation.language)
   return render(request, 'website/prompts.html', {'prompts': prompts})
 
 def prompt_detail(request, slug):
