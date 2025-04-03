@@ -1,13 +1,12 @@
 from rest_framework import serializers
 from website.models import TimeLog, Attainment, Level
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 class TimeLogSerializer(serializers.ModelSerializer):
     class Meta:
         model = TimeLog
         fields = '__all__'
         read_only_fields = ('user',)
-
 
 class LevelSerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,7 +26,7 @@ class UserSerializer(serializers.ModelSerializer):
     next_level = serializers.SerializerMethodField()
 
     class Meta:
-        model = User
+        model = get_user_model()
         fields = ('id', 'username', 'email', 'attainments', 'current_level', 'next_level')
 
     def get_attainments(self, obj):
