@@ -23,6 +23,7 @@ ALLOWED_HOSTS = [
     "largeenglish.com",
     "127.0.0.1",
     "le-330018731817.europe-west1.run.app",
+    ".sfl.ai",
     ]
 
 LOGIN_REDIRECT_URL = '/'  # Redirect after successful login
