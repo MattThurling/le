@@ -6,6 +6,8 @@ load_dotenv()
 
 DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "t", "yes")
 
+AUTH_USER_MODEL = 'website.User'
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 

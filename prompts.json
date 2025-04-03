@@ -1,0 +1,542 @@
+[
+  {
+    "id": 27,
+    "title": "Voix active à passive",
+    "slug": "voix-active-a-passive",
+    "content": "Demande-moi de transformer une seule phrase active en phrase passive à la fois.\r\nContinue jusqu’à ce que j’en réussisse cinq d’affilée.\r\nCorrige-moi si je me trompe, en m’expliquant pourquoi.\r\n\r\nLe format doit être :\r\nTransforme cette phrase à la voix passive : Les enfants ont cassé la vitre.",
+    "level": "B2",
+    "image": "french.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 2,
+    "title": "Singular, Plural and Uncountable Nouns",
+    "slug": "singular-plural-and-uncountable-nouns",
+    "content": "I want to practice using singular and plural nouns, as well as uncountable nouns. Please give me a sentence with one missing noun, and I will fill in the blank with a contextually appropriate noun in the correct form (singular, plural, or uncountable). After I respond, tell me if I’m correct and give a brief explanation if necessary. Continue until I get ten correct in a row. If I make a mistake, reset the streak.\r\n\r\nFormat:\r\n\r\nSentence: \"She bought some ___ for the picnic.\"\r\n\r\nMy answer: fruit\r\n\r\nYour response: ✅ Correct! “Fruit” is an uncountable noun that fits the context of what someone might bring to a picnic.",
+    "level": "A2",
+    "image": "nouns.jpg",
+    "organisation": null
+  },
+  {
+    "id": 1,
+    "title": "IELTS Speaking Test Section One Preparation",
+    "slug": "ielts-speaking-test-section-one-preparation",
+    "content": "Ask me the questions from section one of the IELTS speaking test, one at a time. Correct my responses and give me a mark out of 9.",
+    "level": "A1",
+    "image": "exam.jpg",
+    "organisation": null
+  },
+  {
+    "id": 38,
+    "title": "Tout et ses variantes",
+    "slug": "tout-et-ses-variantes",
+    "content": "Pose-moi une seule phrase à compléter à la fois avec la forme correcte de “tout” (tout, tous, toute, toutes), en fonction du genre, du nombre, et de la fonction dans la phrase.\r\nContinue jusqu’à ce que j’aie cinq bonnes réponses consécutives.\r\nCorrige-moi si je me trompe, en m’expliquant pourquoi.\r\n\r\nLe format doit être :\r\nComplète la phrase : ___ la journée, elle a travaillé sans pause.",
+    "level": "B2",
+    "image": "dogs.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 30,
+    "title": "Futur proche vs Futur simple",
+    "slug": "futur-proche-vs-futur-simple",
+    "content": "Pose-moi une seule phrase à compléter à la fois, où je dois choisir entre le futur simple et le futur proche. Continue jusqu'à ce que j’aie cinq bonnes réponses consécutives.\r\nCorrige-moi si je me trompe, en m’expliquant pourquoi.\r\n\r\nLe format doit être :\r\nComplète la phrase : Demain, je ___ (aller) à la plage.",
+    "level": "B2",
+    "image": "future.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 31,
+    "title": "Subjonctif et conjonctions",
+    "slug": "subjonctif-et-conjonctions",
+    "content": "Pose-moi une seule phrase à compléter à la fois avec une conjonction qui demande le subjonctif (comme bien que, à condition que, pourvu que, avant que, sans que, afin que, quoique, etc.).\r\nJe dois compléter la phrase en utilisant correctement le subjonctif. Continue à me poser des phrases jusqu’à ce que j’aie cinq bonnes réponses consécutives.\r\nCorrige-moi si je me trompe, en m’expliquant pourquoi.\r\n\r\nLe format doit être :\r\nComplète la phrase : Il viendra, bien que je/j’ ___ (ne pas vouloir) le voir.",
+    "level": "B2",
+    "image": "storm.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 32,
+    "title": "Conditionnel passé et plus-que-parfait",
+    "slug": "conditionnel-pass-et-plus-que-parfait",
+    "content": "Pose-moi une seule phrase à compléter à la fois, contenant une hypothèse qui nécessite l’usage correct du plus-que-parfait et du conditionnel passé.\r\nUtilise principalement des structures avec si, mais glisse aussi parfois d'autres tournures comme au cas où, à moins que, dans le cas où, etc.\r\nContinue jusqu’à ce que j’aie cinq bonnes réponses consécutives.\r\nCorrige-moi si je me trompe, en m’expliquant pourquoi.\r\n\r\nLe format doit être :\r\nComplète la phrase : Si tu m’___ (prévenir), je/j’ ___ (pouvoir) éviter tout ça.",
+    "level": "C1",
+    "image": "french.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 33,
+    "title": "Expressions impersonnelles",
+    "slug": "expressions-impersonnelles",
+    "content": "Demande-moi de reformuler une seule phrase à la fois en utilisant une expression impersonnelle (comme il est important que, il semble que, il faut que, il est dommage que, etc.), en respectant les temps verbaux appropriés (souvent le subjonctif).\r\nContinue jusqu’à ce que j’aie cinq reformulations correctes consécutives.\r\nCorrige-moi si je me trompe, en m’expliquant pourquoi.\r\n\r\nLe format doit être :\r\nReformule la phrase avec une expression impersonnelle : Je dois partir tôt. → Il faut que je parte tôt.",
+    "level": "C1",
+    "image": "french.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 34,
+    "title": "Figures de style",
+    "slug": "figures-de-style",
+    "content": "Pose-moi une seule phrase à compléter à la fois avec une figure de style, comme une métaphore, une hyperbole, une comparaison, une personnification, une litote, un oxymore, etc.\r\nIndique toujours la figure de style attendue.\r\nContinue jusqu’à ce que j’aie cinq bonnes réponses consécutives.\r\nCorrige-moi si je me trompe, en m’expliquant pourquoi.\r\n\r\nLe format doit être :\r\nComplète la phrase avec une métaphore : Le temps est un(e) ___ qui efface tous les souvenirs.",
+    "level": "C1",
+    "image": "french.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 35,
+    "title": "Accord du participe passé",
+    "slug": "accord-du-participe-pass-",
+    "content": "Pose-moi une seule phrase à compléter à la fois, nécessitant un accord correct du participe passé.\r\nUtilise différents cas (avec avoir, être, les pronoms relatifs ou compléments d’objet direct placés avant, etc.).\r\nContinue jusqu’à ce que j’aie cinq bonnes réponses consécutives.\r\nCorrige-moi si je me trompe, en m’expliquant clairement la règle d’accord utilisée.\r\n\r\nLe format doit être :\r\nComplète la phrase : Les lettres que j’ai ___ (écrire) étaient très émouvantes.",
+    "level": "C1",
+    "image": "french.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 36,
+    "title": "Langage soutenu",
+    "slug": "langage-soutenu",
+    "content": "Donne-moi une seule phrase à la fois, formulée en langage familier ou courant, que je dois reformuler en langage soutenu (registre formel ou académique).\r\nContinue jusqu’à ce que j’aie cinq reformulations correctes consécutives.\r\nCorrige-moi si je me trompe, en m’expliquant ce qui aurait été plus approprié.\r\n\r\nLe format doit être :\r\nReformule cette phrase en langage soutenu : Il m’a dit qu’il en avait marre.",
+    "level": "C1",
+    "image": "boardroom.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 37,
+    "title": "C'est vs Il est",
+    "slug": "c-est-vs-il-est",
+    "content": "Pose-moi une seule phrase à compléter à la fois, où je dois choisir entre “c’est” et “il est”.\r\nUtilise des exemples variés (avec adjectifs, noms, professions, etc.).\r\nContinue jusqu’à ce que j’aie cinq bonnes réponses consécutives.\r\nCorrige-moi si je me trompe, en m’expliquant clairement la règle.\r\n\r\nLe format doit être :\r\nComplète la phrase : ___ important de bien dormir.",
+    "level": "B1",
+    "image": "present.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 29,
+    "title": "Expressions idiomatiques",
+    "slug": "expressions-idiomatiques",
+    "content": "Donne-moi une expression idiomatique française dans une phrase. Je dois la reformuler en langage courant pour montrer que je comprends son sens.\r\nContinue jusqu’à ce que j’en réussisse cinq d’affilée.\r\nCorrige-moi si je me trompe, en m’expliquant la signification de l’expression.\r\n\r\nLe format doit être :\r\nExplique cette expression en langage courant : Il a pris ses jambes à son cou.",
+    "level": "B2",
+    "image": "french.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 4,
+    "title": "Mastering the Past Tenses",
+    "slug": "mastering-the-past-tenses",
+    "content": "Create fill-in-the-blank exercises to help me master the four past tenses in English (past simple, past continuous, past perfect, and past perfect continuous).\r\n\r\nGive me one sentence at a time with a blank for the verb or verb phrase.\r\n\r\nChoose examples where the correct tense is unambiguous, based on context.\r\n\r\nAfter each answer, tell me if I'm correct and explain why.\r\n\r\nContinue until I get five correct in a row.\r\n\r\nUse this format:\r\n\r\nSentence: When I arrived at the station, the train ______ (already / leave).\r\n\r\nExpected answer:\r\nhad already left\r\n\r\nExplanation:\r\nThe sentence uses two actions in the past: \"I arrived\" and \"the train had already left.\"\r\nThe train leaving happened before the arrival, so we use the past perfect (\"had left\") to show the earlier action. \"Already\" adds emphasis that the action was completed before the second one.",
+    "level": "B1",
+    "image": "past.jpg",
+    "organisation": null
+  },
+  {
+    "id": 11,
+    "title": "Voix passive à active",
+    "slug": "voix-passive-active",
+    "content": "Donne-moi une seule phrase à la voix passive à la fois. Je dois la réécrire à la voix active.\r\nContinue jusqu’à ce que j’aie cinq transformations correctes consécutives.\r\nCorrige-moi si je me trompe, en m’expliquant pourquoi.\r\n\r\nLe format doit être :\r\nRéécris cette phrase à la voix active : La décision a été prise par le directeur.",
+    "level": "B2",
+    "image": "passive.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 7,
+    "title": "Active to Passive Voice",
+    "slug": "active-to-passive-voice",
+    "content": "Give me a sentence in active voice. I will rewrite it in passive voice. Correct my response. Keep going, using a variety of tenses, until I get five in a row correct. Ask the questions one at a time.",
+    "level": "B2",
+    "image": "passive.jpg",
+    "organisation": null
+  },
+  {
+    "id": 6,
+    "title": "Mastering the Future Tenses",
+    "slug": "mastering-the-future-tenses",
+    "content": "Give me practice exercises for mastering the four future tenses in English (future simple, future continuous, future perfect, and future perfect continuous). Present one sentence at a time with a missing verb or phrase. I will fill in the blank. Ensure each sentence includes enough context so that the correct tense is unambiguous. Keep going until I get five correct in a row. After each answer, tell me whether I was right, and if not, explain why. Then give me the next sentence.",
+    "level": "B1",
+    "image": "future.jpg",
+    "organisation": null
+  },
+  {
+    "id": 5,
+    "title": "Mastering the Present Tenses",
+    "slug": "mastering-the-present-tenses",
+    "content": "Create fill-in-the-blank exercises to help me master the four present tenses in English (present simple, present continuous, present perfect, and present perfect continuous).\r\n\r\nGive me one sentence at a time with a blank for the verb or verb phrase.\r\n\r\nChoose examples where the correct tense is unambiguous, based on context.\r\n\r\nAfter each answer, tell me if I'm correct and explain why.\r\n\r\nContinue until I get five correct in a row.\r\n\r\nExample format:\r\n\r\nSentence:\r\nI __________ (live) in this city since 2015.\r\n\r\nExpected answer:\r\nhave lived\r\n\r\nExplanation:\r\nThis action started in the past and continues to the present, so the present perfect tense is used.",
+    "level": "B1",
+    "image": "present.jpg",
+    "organisation": null
+  },
+  {
+    "id": 48,
+    "title": "Frequency Adverbs",
+    "slug": "frequency-adverbs",
+    "content": "Give me one sentence at a time with a missing frequency adverb (e.g., always, usually, often, sometimes, rarely, never). I’ll fill in the blank. After each attempt, tell me whether I was correct and give the right answer if I was wrong. Keep going until I get five correct in a row.",
+    "level": "A2",
+    "image": "park.jpg",
+    "organisation": null
+  },
+  {
+    "id": 3,
+    "title": "Irregular Verbs in the Simple Present Tense",
+    "slug": "irregular-verbs-in-the-simple-present-tense",
+    "content": "Give me exercises for mastering irregular verbs in the simple present tense. Ask them one at a time. Keep going until I get 5 in a row correct.",
+    "level": "A1",
+    "image": "verbs.jpg",
+    "organisation": null
+  },
+  {
+    "id": 12,
+    "title": "Dialogue direct en rapporté",
+    "slug": "dialogue-direct-en-rapport-",
+    "content": "Donne-moi des phrases en dialogue direct, et je vais les réécrire sous forme rapportée. Une phrase à la fois. Continuons jusqu'à ce que je fasse 5 corrects consécutifs.",
+    "level": "B1",
+    "image": "reported.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 14,
+    "title": "Présent des verbes en -er",
+    "slug": "pr-sent-des-verbes-en-er",
+    "content": "Donne-moi des exercices pour pratiquer le présent des verbes réguliers en -er. Pose-moi une question à la fois. Continue jusqu'à ce que j'en réussisse 5 d'affilée.",
+    "level": "A1",
+    "image": "park.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 15,
+    "title": "Les nombres 1-100",
+    "slug": "les-nombres-1-100",
+    "content": "Pose-moi des questions pour me faire pratiquer les nombres de 1 à 100 en français. Continue jusqu'à ce que j'en réussisse 5 d'affilée.",
+    "level": "A1",
+    "image": "market.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 16,
+    "title": "Être et Avoir au présent",
+    "slug": "-tre-et-avoir-au-pr-sent",
+    "content": "Donne-moi des exercices de traduction de phrases simples utilisant 'être' et 'avoir' au présent. Pose-moi une phrase à la fois. Continue jusqu'à ce que j'en réussisse 5 d'affilée.",
+    "level": "A1",
+    "image": "shop.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 52,
+    "title": "Quantifiers",
+    "slug": "quantifiers",
+    "content": "Give me a sentence with a missing word. My job is to choose the best quantifier to fill the blank. It could be some, any, much, many, a few, a little, too much, too many, enough, etc. Give them to me one at a time and keep going until I get five in a row correct.",
+    "level": "B1",
+    "image": "presentation.jpg",
+    "organisation": null
+  },
+  {
+    "id": 53,
+    "title": "Modals for Advice and Permission",
+    "slug": "modals-for-advice-and-permission",
+    "content": "Test my understanding of modal verbs (eg can, should, must). Give one sentence at a time. Keep going until I get 5 right.",
+    "level": "B1",
+    "image": "can.jpg",
+    "organisation": null
+  },
+  {
+    "id": 56,
+    "title": "Relative Clauses",
+    "slug": "relative-clauses",
+    "content": "Test my understanding of relative clauses. Give me one sentence to complete each time. Keep going until I get five in a row correct.",
+    "level": "B2",
+    "image": "who.jpg",
+    "organisation": null
+  },
+  {
+    "id": 17,
+    "title": "Présent des verbes courants",
+    "slug": "pr-sent-des-verbes-courants",
+    "content": "Demande-moi de conjuguer des verbes fréquents au présent (aller, venir, faire, prendre, mettre). Une phrase à la fois. Continue jusqu'à ce que j'en réussisse 5 d'affilée.",
+    "level": "A1",
+    "image": "french.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 18,
+    "title": "Articles définis et indéfinis",
+    "slug": "articles-d-finis-et-ind-finis",
+    "content": "Donne-moi des phrases avec des articles définis et indéfinis et demande-moi de choisir le bon article. Une phrase à la fois. Continue jusqu'à ce que j'en réussisse 5 d'affilée.",
+    "level": "A1",
+    "image": "kitchen.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 19,
+    "title": "Prépositions de lieu",
+    "slug": "pr-positions-de-lieu",
+    "content": "Pose-moi des questions pour pratiquer les prépositions de lieu (dans, sur, sous, devant, derrière, etc.). Une phrase à la fois. Continue jusqu'à ce que j'en réussisse 5 d'affilée.",
+    "level": "A2",
+    "image": "spanners.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 20,
+    "title": "Adjectifs possessifs",
+    "slug": "adjectifs-possessifs",
+    "content": "Fais-moi pratiquer les adjectifs possessifs en me posant des questions avec 'mon', 'ma', 'mes', etc. Continue jusqu'à ce que j'en réussisse 5 d'affilée.",
+    "level": "A2",
+    "image": "gifts.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 21,
+    "title": "Négation simple",
+    "slug": "n-gation-simple",
+    "content": "Demande-moi de reformuler des phrases à la forme négative en utilisant 'ne...pas'. Une phrase à la fois. Continue jusqu'à ce que j'en réussisse 5 d'affilée.",
+    "level": "A2",
+    "image": "french.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 22,
+    "title": "Passé composé",
+    "slug": "pass-compos-",
+    "content": "Fais-moi conjuguer des verbes fréquents au passé composé avec avoir et être. Une phrase à la fois. Continue jusqu'à ce que j'en réussisse 5 d'affilée.",
+    "level": "A2",
+    "image": "french.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 23,
+    "title": "Depuis, Pendant, Il y a",
+    "slug": "depuis-pendant-il-y-a",
+    "content": "Demande-moi de compléter des phrases avec 'depuis', 'pendant' ou 'il y a'. Une phrase à la fois. Continue jusqu'à ce que j'en réussisse 5 d'affilée.",
+    "level": "A2",
+    "image": "french.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 24,
+    "title": "Pronoms relatifs",
+    "slug": "pronoms-relatifs",
+    "content": "Donne-moi des exercices de reformulation en utilisant les pronoms relatifs (qui, que, où, dont). Pose-moi une phrase à la fois. Continue jusqu'à ce que j'en réussisse 5 d'affilée.",
+    "level": "B1",
+    "image": "busycafe.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 25,
+    "title": "Imparfait vs Passé composé",
+    "slug": "imparfait-vs-pass-compos-",
+    "content": "Pose-moi des questions pour pratiquer l'imparfait et le passé composé en contexte. Une phrase à la fois. Continue jusqu'à ce que j'en réussisse 5 d'affilée.",
+    "level": "B1",
+    "image": "past.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 26,
+    "title": "Subjonctif présent",
+    "slug": "subjonctif-pr-sent",
+    "content": "Fais-moi pratiquer l'usage du subjonctif avec des phrases déclenchées par 'il faut que', 'je veux que', etc. Une phrase à la fois. Continue jusqu'à ce que j'en réussisse 5 d'affilée.",
+    "level": "B1",
+    "image": "french.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 28,
+    "title": "Pronoms Y et En",
+    "slug": "pronoms-y-et-en",
+    "content": "Donne-moi des phrases où je dois choisir entre 'y' et 'en'. Une phrase à la fois. Continue jusqu'à ce que j'en réussisse 5 d'affilée.",
+    "level": "B1",
+    "image": "french.jpg",
+    "organisation": "french"
+  },
+  {
+    "id": 40,
+    "title": "Simple Present Verbs",
+    "slug": "simple-present-verbs",
+    "content": "Give me simple present tense verb drills. Ask one at a time. Keep going until I get 5 in a row correct.",
+    "level": "A1",
+    "image": "bedroom.jpg",
+    "organisation": null
+  },
+  {
+    "id": 41,
+    "title": "Basic Prepositions",
+    "slug": "basic-prepositions",
+    "content": "Give me a sentence with a basic preposition missing. Keep going until I get 5 in a row right.",
+    "level": "A1",
+    "image": "lounge.jpg",
+    "organisation": null
+  },
+  {
+    "id": 42,
+    "title": "Plurals",
+    "slug": "plurals",
+    "content": "Give me a drill on plural nouns. One noun at a time. I’ll type the plural form. Stop when I get 5 right in a row.",
+    "level": "A1",
+    "image": "kitchen.jpg",
+    "organisation": null
+  },
+  {
+    "id": 43,
+    "title": "Forming Questions",
+    "slug": "forming-questions",
+    "content": "Give me one sentence at a time. I’ll turn each into a question using 'do' or 'does'. Keep going until I get 5 in a row correct.",
+    "level": "A1",
+    "image": "cafe.jpg",
+    "organisation": null
+  },
+  {
+    "id": 44,
+    "title": "Describing Objects",
+    "slug": "describing-objects",
+    "content": "Give me a sentence with a simple adjective missing. I will type in a suitable word. Keep going until I get 5 in a row correct.",
+    "level": "A1",
+    "image": "gifts.jpg",
+    "organisation": null
+  },
+  {
+    "id": 45,
+    "title": "Past Simple Verbs",
+    "slug": "past-simple-verbs",
+    "content": "Drill me on past simple regular verbs. Give me a sentence with the verb missing. Continue until I get 5 right in a row.",
+    "level": "A2",
+    "image": "couple.jpg",
+    "organisation": null
+  },
+  {
+    "id": 46,
+    "title": "There is / There are",
+    "slug": "there-is-there-are",
+    "content": "Give me one sentence at a time using there is/there are. Ask me to complete them. Keep going until I get 5 in a row right.",
+    "level": "A2",
+    "image": "animals.jpg",
+    "organisation": null
+  },
+  {
+    "id": 47,
+    "title": "Jobs and Duties",
+    "slug": "jobs-and-duties",
+    "content": "Ask me to match jobs with what people do. One at a time. Continue until I get 5 right.",
+    "level": "A2",
+    "image": "order.jpg",
+    "organisation": null
+  },
+  {
+    "id": 49,
+    "title": "Comparatives",
+    "slug": "comparatives",
+    "content": "Drill me on comparatives. Give me a sentence with the comparative word missing and I will fill it in. Keep going until I get five in a row correct.",
+    "level": "A2",
+    "image": "dogs.jpg",
+    "organisation": null
+  },
+  {
+    "id": 50,
+    "title": "Phrasal Verbs",
+    "slug": "phrasal-verbs",
+    "content": "Give me a sentence using a phrasal verb, with one part missing, either the core action or the particle(s). I will fill in the blank. Keep going until I get 5 in a row right.",
+    "level": "B1",
+    "image": "phrasal.jpg",
+    "organisation": null
+  },
+  {
+    "id": 51,
+    "title": "First Conditional",
+    "slug": "first-conditional",
+    "content": "Drill me on first conditionals. Use the structure if + present, will + verb. Give one sentence at a time with one part missing — randomise whether it’s the ‘if’ clause or the ‘will’ clause. I’ll fill in the blank. Keep going until I get 5 correct in a row.",
+    "level": "B1",
+    "image": "storm.jpg",
+    "organisation": null
+  },
+  {
+    "id": 55,
+    "title": "Common Collocations",
+    "slug": "common-collocations",
+    "content": "Give me a drill on collocations. Show a sentence with a missing word. I’ll guess the natural-sounding phrase. One at a time. Keep going until I get five in a row.",
+    "level": "B2",
+    "image": "busycafe.jpg",
+    "organisation": null
+  },
+  {
+    "id": 57,
+    "title": "Linking Words",
+    "slug": "linking-words",
+    "content": "Ask me to improve a sentence using a better linking word. One at a time. Continue until I succeed five times in a row.",
+    "level": "B2",
+    "image": "link.jpg",
+    "organisation": null
+  },
+  {
+    "id": 58,
+    "title": "Advanced Adverbs",
+    "slug": "advanced-adverbs",
+    "content": "Drill me on advanced adverbs (barely, hardly, scarcely). Give one example at a time with a gap to fill.",
+    "level": "B2",
+    "image": "student.jpg",
+    "organisation": null
+  },
+  {
+    "id": 59,
+    "title": "Reported Speech",
+    "slug": "reported-speech",
+    "content": "Give me a sentence to rephrase using reported speech. Ask one at a time. Keep going until I get 5 right.",
+    "level": "B2",
+    "image": "reported.jpg",
+    "organisation": null
+  },
+  {
+    "id": 62,
+    "title": "Inversion for Emphasis",
+    "slug": "inversion-for-emphasis",
+    "content": "Drill me on inversion for emphasis. Start by giving a short explanation and example of what inversion for emphasis is. Then give me one sentence at a time, but put the words in random order. My job is to write out the sentence in inverted form.\r\n\r\neg:\r\n\r\nseen I beautiful sunset had never a such\r\n\r\nanswer:\r\n\r\nNever had I seen such a beautiful sunset\r\n\r\nContinue  with this until I get 5 in a row correct.",
+    "level": "C1",
+    "image": "inverted.jpg",
+    "organisation": null
+  },
+  {
+    "id": 63,
+    "title": "Advanced Connectors",
+    "slug": "advanced-connectors",
+    "content": "Give me a sentence with an advanced connector missing (e.g., nonetheless, moreover). I’ll complete it. One at a time. Keep going until I get five in a row correct.",
+    "level": "C1",
+    "image": "ideas.jpg",
+    "organisation": null
+  },
+  {
+    "id": 64,
+    "title": "Simplifying Noun Phrases",
+    "slug": "simplifying-noun-phrases",
+    "content": "Show me complex noun phrases and ask me to simplify them. One at a time. Keep going until I get five in a row correct.",
+    "level": "C1",
+    "image": "boardroom.jpg",
+    "organisation": null
+  },
+  {
+    "id": 65,
+    "title": "Academic Style Completion",
+    "slug": "academic-style-completion",
+    "content": "Ask me to complete academic-style sentences. Focus on tone and structure. Keep going until I get 5 in a row.",
+    "level": "C1",
+    "image": "library.jpg",
+    "organisation": null
+  },
+  {
+    "id": 66,
+    "title": "Dependent Prepositions",
+    "slug": "dependent-prepositions",
+    "content": "Give me a drill on dependent prepositions after abstract nouns and adjectives. One at a time.",
+    "level": "C1",
+    "image": "for.jpg",
+    "organisation": null
+  },
+  {
+    "id": 67,
+    "title": "Paraphrasing Idioms",
+    "slug": "paraphrasing-idioms",
+    "content": "Ask me to paraphrase idiomatic or abstract ideas clearly. One at a time. Continue until I get 5 in a row.",
+    "level": "C1",
+    "image": "cat.jpg",
+    "organisation": null
+  },
+  {
+    "id": 70,
+    "title": "Hast du ein hobby",
+    "slug": "hast-du-ein-hobby",
+    "content": "Frag mich wenn ich habe ein hobby",
+    "level": "A1",
+    "image": "busycafe.jpg",
+    "organisation": "german"
+  }
+]

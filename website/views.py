@@ -54,11 +54,7 @@ def index(request):
   return render(request, 'website/index.html')
 
 def prompt_list(request):
-  org_filter = request.GET.get('o', None)  # Get the 'o' parameter from the URL
-  if org_filter:
-    prompts = Prompt.objects.filter(organisation=org_filter)
-  else:
-    prompts = Prompt.objects.filter(organisation__isnull=True)
+  prompts = Prompt.objects.filter(user__organisation=request.organisation)
   return render(request, 'website/prompts.html', {'prompts': prompts})
 
 def prompt_detail(request, slug):
