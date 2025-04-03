@@ -7,6 +7,7 @@ with open('prompts.json', 'r') as file:
 
 for entry in data:
     user = User.objects.get(username="Matt")
+    level = Level.objects.get(name=entry["level"])
     if entry["organisation"] == "french":
         language = Language.objects.get(name="French")
     else:
@@ -17,5 +18,5 @@ for entry in data:
         user = user,
         language = language,
         level = entry["level"],
-        image = entry["image"],
+        image = level,
     )
