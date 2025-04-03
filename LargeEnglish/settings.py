@@ -104,6 +104,7 @@ TEMPLATES = [
 CSRF_TRUSTED_ORIGINS = [
     "https://largeenglish.com",
     "http://localhost:5173",
+    "https://*.sfl.ai",
 ]
 
 WSGI_APPLICATION = 'LargeEnglish.wsgi.application'
