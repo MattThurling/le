@@ -6,4 +6,7 @@ dj_database_url
 django-tinymce
 whitenoise
 djangorestframework
+pytest
+pytest-django
+factory_boy>=3.3.0
 

@@ -71,7 +71,6 @@ class User(AbstractUser):
     return current_level, next_level
 
 class Level(models.Model):
-  user = models.ForeignKey('website.User', on_delete=models.CASCADE, related_name="levels") 
   code = models.CharField(max_length=4)
   description = models.CharField(max_length=128)
   study = models.SmallIntegerField()
@@ -79,7 +78,7 @@ class Level(models.Model):
   
   def __str__(self):
     return self.code
-    
+
 class Prompt(ImageModel):
   user = models.ForeignKey('website.User', on_delete=models.CASCADE, related_name="prompts")
   language = models.ForeignKey(Language, on_delete=models.CASCADE, related_name="prompts")
