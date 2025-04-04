@@ -1,5 +1,6 @@
 from pathlib import Path
 from dotenv import load_dotenv
+import dj_database_url
 import os
 
 load_dotenv()
@@ -114,17 +115,13 @@ WSGI_APPLICATION = 'LargeEnglish.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres.hllsajbfsvwtjrmjqtad',
-        'PASSWORD': os.getenv("DB_PASSWORD"),
-        'HOST': 'aws-0-eu-west-2.pooler.supabase.com',
-        'PORT': 6543,
-        'OPTIONS': {
-            'sslmode': 'require'  
-        },
-    }
+    'default': dj_database_url.config(
+        default='postgresql://postgres.hllsajbfsvwtjrmjqtad:{password}@aws-0-eu-west-2.pooler.supabase.com:6543/postgres'.format(
+            password=os.getenv("DB_PASSWORD")
+        ),
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
 
 
