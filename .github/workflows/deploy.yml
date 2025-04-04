@@ -43,6 +43,7 @@ jobs:
           echo "DJANGO_SECRET_KEY=testing" >> $GITHUB_ENV
           echo "DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1" >> $GITHUB_ENV
           echo "DATABASE_URL=postgres://postgres:postgres@localhost:5432/test_postgres" >> $GITHUB_ENV
+          echo "DB_SSL=false" >> $GITHUB_ENV
 
       - name: Run migrations and tests
         env:

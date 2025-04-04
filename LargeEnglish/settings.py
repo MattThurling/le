@@ -114,14 +114,17 @@ WSGI_APPLICATION = 'LargeEnglish.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default='postgresql://postgres.hllsajbfsvwtjrmjqtad:{password}@aws-0-eu-west-2.pooler.supabase.com:6543/postgres'.format(
-            password=os.getenv("DB_PASSWORD")
-        ),
-        conn_max_age=600,
-        ssl_require=True
+USE_SSL_DB = os.getenv("DB_SSL", "true").lower() == "true"
+
+DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    "postgresql://postgres.hllsajbfsvwtjrmjqtad:{password}@aws-0-eu-west-2.pooler.supabase.com:6543/postgres".format(
+        password=os.getenv("DB_PASSWORD")
     )
+)
+
+DATABASES = {
+    'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600, ssl_require=USE_SSL_DB)
 }
 
 
