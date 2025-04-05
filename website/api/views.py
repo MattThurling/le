@@ -23,6 +23,7 @@ class CurrentUserAPIView(views.APIView):
 
 class TabooSetViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = TabooSet.objects.all()
+    permission_classes = [permissions.AllowAny]
 
     @action(detail=True, methods=["get"], url_path='cards')
     def cards(self, request, pk=None):

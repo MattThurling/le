@@ -90,7 +90,7 @@
 
 <script setup>
 import { ref, onMounted, watch, computed } from 'vue'
-import api from './api'
+import { secureApi } from './api'
 import Chart from 'chart.js/auto'
 
 const timelogs = ref([])  // Reactive state for storing fetched timelogs
@@ -98,9 +98,7 @@ const user = ref({current_level: {code: '', study: 1}, next_level: {code: '', st
 const newTimeLog = ref({ date: '', activity: '', duration: '' })
 
 // Chart.js references
-const barChartCanvas = ref(null)
 const doughnutChartCanvas = ref(null)
-let barChartInstance = null
 let doughnutChartInstance = null
 
 const totalDuration = computed(() => {
@@ -109,7 +107,7 @@ const totalDuration = computed(() => {
 
 const fetchUser = async () => {
   try {
-    const response = await api.get('user')
+    const response = await secureApi.get('user')
     user.value = response.data
   } catch (error) {
     console.error('Error fetching user:', error)
@@ -118,7 +116,7 @@ const fetchUser = async () => {
 
 const fetchTimeLogs = async () => {
   try {
-    const response = await api.get('timelogs/')
+    const response = await secureApi.get('timelogs/')
     timelogs.value = response.data // Update the reactive state
   } catch (error) {
     console.error('Error fetching timelogs:', error)
@@ -132,7 +130,7 @@ const submitTimeLog = async () => {
   }
 
   try {
-    const response = await api.post('timelogs/', newTimeLog.value)
+    const response = await secureApi.post('timelogs/', newTimeLog.value)
     await fetchTimeLogs()  // explicitly refresh from server
     newTimeLog.value = { date: '', activity: '', duration: '' } // Reset input fields
   } catch (error) {
