@@ -13,7 +13,7 @@ const api = axios.create({
 api.interceptors.request.use(
     async (config) => {
         // Get CSRF token from the DOM
-        const el = document.getElementById('vue-app')
+        const el = document.getElementById('data')
         const data = {...el.dataset}
         if (data) {            
             config.headers['X-CSRFToken'] = data.token;

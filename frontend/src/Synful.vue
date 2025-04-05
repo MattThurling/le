@@ -76,6 +76,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import api from './api'
 
 const props = defineProps({
   setId: {
@@ -94,8 +95,8 @@ const visibleTabooWords = computed(() => {
 })
 
 const fetchCards = async () => {
-  const response = await fetch(`/api/sets/${props.setId}/cards/`)
-  const cards = await response.json()
+  const response = await api.get(`sets/${props.setId}/cards/`)
+  const cards = response.data
   remainingCards.value = shuffle(cards)
   nextCard()
 }
