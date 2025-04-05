@@ -153,3 +153,42 @@ class Attainment(BaseModel):
   def __str__(self):
     return self.user.username + ' : ' + self.level.code
 
+class Word(models.Model):
+  word = models.CharField(max_length=100, unique=True)
+  language = models.ForeignKey(Language, on_delete=models.CASCADE, related_name="words")
+  part_of_speech = models.CharField(max_length=50)
+
+  def __str__(self):
+    return self.word
+
+class TabooWord(models.Model):
+  target_word = models.ForeignKey(Word, related_name='taboo_for', on_delete=models.CASCADE)
+  taboo_word = models.ForeignKey(Word, related_name='is_taboo_word', on_delete=models.CASCADE)
+
+  def __str__(self):
+    return f"{self.taboo_word.word} (taboo for {self.target_word.word})"
+
+class TabooSet(models.Model):
+  name = models.CharField(max_length=100)
+  owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="taboo_sets")
+  language = models.ForeignKey(Language, on_delete=models.CASCADE, related_name="taboo_sets")
+
+  def __str__(self):
+    return f"{self.name} ({self.owner.username}, {self.language.name})"
+
+class TabooCard(models.Model):
+  taboo_set = models.ForeignKey(TabooSet, on_delete=models.CASCADE, related_name="cards")
+  target = models.ForeignKey(Word, on_delete=models.CASCADE, related_name="taboo_cards")
+
+  def __str__(self):
+    return f"{self.target.word} (Set: {self.taboo_set.name})"
+
+class TabooCardTabooWord(models.Model):
+  card = models.ForeignKey(TabooCard, on_delete=models.CASCADE, related_name="taboo_links")
+  taboo_word = models.ForeignKey(Word, on_delete=models.CASCADE, related_name="as_taboo")
+
+  class Meta:
+    unique_together = ("card", "taboo_word")
+
+  def __str__(self):
+    return f"{self.taboo_word.word} (taboo for {self.card.target.word})"

@@ -75,3 +75,5 @@ def post_detail(request, slug):
   post = get_object_or_404(Post, slug=slug)
   return render(request, 'website/post.html', {'post': post})
 
+def synful(request):
+  return render(request, 'website/synful.html')

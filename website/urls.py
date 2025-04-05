@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
   path('', views.index, name='index'),
+  path('synful/', views.synful, name='synful'),
   path('prompts/', views.prompt_list, name='prompt_list'),
   path('prompts/<slug:slug>/', views.prompt_detail, name='prompt_detail'),
   path('pages/', views.page_list, name='page_list'),
