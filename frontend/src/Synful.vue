@@ -60,14 +60,20 @@
             />
           </div>
 
-          <!-- Drop down -->
+          <!-- Settings Dropdown -->
           <div class="mb-4">
-            <select class="select select-bordered w-full" v-model="difficulty">
-              <option value="easy">Business Words</option>
-              <option value="medium">General</option>
-              <option value="hard">Music</option>
+            <select class="select select-bordered w-full" v-model="selectedSetId">
+              <option
+                v-for="set in availableSets"
+                :key="set.id"
+                :value="set.id"
+              >
+                {{ set.name }}
+              </option>
             </select>
           </div>
+
+
         </div>
       </div>
     </div>
@@ -75,7 +81,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { publicApi } from './api'
 
 const props = defineProps({
@@ -84,6 +90,13 @@ const props = defineProps({
     required: true
   }
 })
+
+const availableSets = [
+  { id: 1, name: 'English' },
+  { id: 3, name: 'Spanish' }
+]
+
+const selectedSetId = ref(1)
 
 const remainingCards = ref([])
 const currentCard = ref(null)
@@ -94,8 +107,8 @@ const visibleTabooWords = computed(() => {
   return currentCard.value?.taboo_words.slice(0, tabooWordCount.value) || []
 })
 
-const fetchCards = async () => {
-  const response = await publicApi.get(`sets/${props.setId}/cards/`)
+const fetchCards = async (setId = selectedSetId.value) => {
+  const response = await publicApi.get(`sets/${setId}/cards/`)
   const cards = response.data
   remainingCards.value = shuffle(cards)
   nextCard()
@@ -117,5 +130,10 @@ const nextCard = () => {
   currentCard.value = remainingCards.value.pop()
 }
 onMounted(fetchCards)
+
+watch(selectedSetId, async (newSetId) => {
+  await fetchCards(newSetId)
+})
+
 </script>
   

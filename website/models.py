@@ -154,9 +154,12 @@ class Attainment(BaseModel):
     return self.user.username + ' : ' + self.level.code
 
 class Word(models.Model):
-  word = models.CharField(max_length=100, unique=True)
+  word = models.CharField(max_length=100)
   language = models.ForeignKey(Language, on_delete=models.CASCADE, related_name="words")
   part_of_speech = models.CharField(max_length=50)
+
+  class Meta:
+    unique_together = ('word', 'language') 
 
   def __str__(self):
     return self.word
