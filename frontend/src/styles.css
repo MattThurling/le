@@ -13,6 +13,11 @@
     height: 36px;
 }
 
-
+.countdown [style="--value"] {
+    /* Overwrite the transition so it doesn’t animate. */
+    transition: none !important;
+    animation: none !important;
+  }
+  
 
 

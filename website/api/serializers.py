@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from website.models import TimeLog, Attainment, Level, TabooCard
+from website.models import TimeLog, Attainment, Level, TabooCard, TabooSet
 from django.contrib.auth import get_user_model
 
 class TimeLogSerializer(serializers.ModelSerializer):
@@ -41,6 +41,10 @@ class UserSerializer(serializers.ModelSerializer):
         _, next_level = obj.get_current_and_next_level()
         return LevelSerializer(next_level).data if next_level else None
 
+class TabooSetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TabooSet
+        fields = ['id', 'name']
 
 class TabooCardSerializer(serializers.ModelSerializer):
     target = serializers.CharField(source='target.word')

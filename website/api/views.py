@@ -2,7 +2,7 @@ from rest_framework import views, viewsets, permissions, response
 from rest_framework.decorators import action
 from website.models import TimeLog, TabooSet, TabooCard
 from django.contrib.auth.models import User
-from .serializers import TimeLogSerializer, UserSerializer, TabooCardSerializer
+from .serializers import TimeLogSerializer, UserSerializer, TabooCardSerializer, TabooSetSerializer
 
 class TimeLogViewSet(viewsets.ModelViewSet):
     serializer_class = TimeLogSerializer
@@ -23,6 +23,7 @@ class CurrentUserAPIView(views.APIView):
 
 class TabooSetViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = TabooSet.objects.all()
+    serializer_class = TabooSetSerializer
     permission_classes = [permissions.AllowAny]
 
     @action(detail=True, methods=["get"], url_path='cards')
