@@ -93,7 +93,8 @@ const props = defineProps({
 
 const availableSets = [
   { id: 1, name: 'English' },
-  { id: 3, name: 'Spanish' }
+  { id: 3, name: 'Spanish' },
+  { id: 4, name: 'Hydrography' },
 ]
 
 const selectedSetId = ref(1)
