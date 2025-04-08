@@ -33,6 +33,10 @@
         <button @click="startRound" class="btn btn-primary w-full">
           Start
         </button>
+
+        <button @click="playSound" class="btn btn-primary w-full">
+          W
+        </button>
       </div>
       <div v-else class="grid grid-cols-2 gap-4 mt-6">
         <button @click="nextCard(-1)" class="btn btn-primary btn-outline w-full">
@@ -113,6 +117,7 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import { publicApi } from './api'
 
+
 const props = defineProps({
   setId: {
     type: Number,
@@ -192,8 +197,8 @@ const startCountdown = () => {
 }
 
 const playSound = () => {
-  const w = new Audio('http://localhost:5173/whistle.m4a')
-  w.play()
+  const whistleSFX = new Audio('/whistle.m4a')
+  whistleSFX.play()
 }
 // Get available sets
 const fetchSets = async () => {

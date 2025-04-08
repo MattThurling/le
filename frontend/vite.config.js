@@ -2,8 +2,10 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import tailwindcss from '@tailwindcss/vite'
+import url from '@rollup/plugin-url'
 
 export default defineConfig({
+  assetsInclude: ['**/*.m4a'],
   plugins: [
     vue(),
     tailwindcss(),
@@ -18,7 +20,14 @@ export default defineConfig({
         entryFileNames: 'assets/[name].js',
         chunkFileNames: 'assets/[name].js',
         assetFileNames: 'assets/[name][extname]'
-      }
+      },
+      plugins: [
+        url({
+          include: ['**/*.mp3', '**/*.ogg', '**/*.wav', '**/*.m4a'],
+          limit: 0, // Always copy to output folder instead of inline as data URI
+          fileName: 'assets/[name][extname]',
+        }),
+      ],
     }
   },
   resolve: {
