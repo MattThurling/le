@@ -139,7 +139,7 @@ const timerMinutes = ref(1)
 const timerSeconds = ref(30)
 let countdownInterval = null
 
-// ---- Add this block for time slider functionality
+
 // The array goes from 30s to 300s (5 mins), in 30s increments:
 const timeOptions = [30, 60, 90, 120, 150, 180, 210, 240, 270, 300]
 // We'll use timeIndex (0..9) to pick from timeOptions:
@@ -153,13 +153,17 @@ const selectedTimeDisplay = computed(() => {
   return `${mins}:${secs.toString().padStart(2, '0')}`
 })
 
+
 // Whenever timeIndex changes, reset timerMinutes and timerSeconds
-watch(timeIndex, (newVal) => {
-  const totalSeconds = timeOptions[newVal]
+watch(timeIndex, () => {
+  resetTimer()
+})
+
+const resetTimer = () => {
+  const totalSeconds = timeOptions[timeIndex.value]
   timerMinutes.value = Math.floor(totalSeconds / 60)
   timerSeconds.value = totalSeconds % 60
-})
-// ---- End of added block
+}
 
 // Show only 'tabooWordCount' words
 const visibleTabooWords = computed(() => {
@@ -173,6 +177,7 @@ const formattedSeconds = computed(() => String(timerSeconds.value).padStart(2, '
 // Starts the round and the countdown
 const startRound = () => {
   roundHasStarted.value = true
+  resetTimer()
   score.value = 0
   startCountdown()
 }
@@ -180,13 +185,14 @@ const startRound = () => {
 const startCountdown = () => {
   let totalSeconds = timerMinutes.value * 60 + timerSeconds.value
 
+  clearInterval(countdownInterval)
+
   countdownInterval = setInterval(() => {
     totalSeconds--
     if (totalSeconds <= 0) {
       clearInterval(countdownInterval)
-      playSound('whistle.m4a')
       roundHasStarted.value = false
-      totalSeconds = 0
+      playSound('whistle.m4a')
     }
     timerMinutes.value = Math.floor(totalSeconds / 60)
     timerSeconds.value = totalSeconds % 60
