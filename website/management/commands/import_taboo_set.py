@@ -6,7 +6,7 @@ from website.models import Word, Language, TabooSet, TabooCard, TabooCardTabooWo
 User = get_user_model()
 
 class Command(BaseCommand):
-    help = 'Import taboo cards from a CSV file with 1 to 7 taboo words'
+    help = 'Import taboo cards from a CSV file (expects Target + Taboo 1..7 columns)'
 
     def add_arguments(self, parser):
         parser.add_argument('csv_path', type=str, help='Path to the CSV file')
@@ -25,30 +25,38 @@ class Command(BaseCommand):
         taboo_set, _ = TabooSet.objects.get_or_create(name=set_name, owner=user, language=language)
 
         def get_word(word_str):
-            return Word.objects.filter(word__iexact=word_str.strip(), language=language).first()
+            word_str = word_str.strip()
+            if not word_str:
+                return None
+            word_obj, _ = Word.objects.get_or_create(word__iexact=word_str, language=language, defaults={
+                'word': word_str,
+                'part_of_speech': 'noun'  # or guess/detect if you want
+            })
+            return word_obj
 
         with open(csv_path, newline='', encoding='utf-8') as file:
             reader = csv.DictReader(file)
             for row in reader:
-                target_word = get_word(row["Target"])
+                target_word = get_word(row.get("Target", ""))
                 if not target_word:
-                    self.stdout.write(self.style.WARNING(f"⚠️ Skipped (target not found): {row['Target']}"))
+                    self.stdout.write(self.style.WARNING(f"⚠️ Skipped (target not found or blank): {row.get('Target')}"))
                     continue
 
                 card = TabooCard.objects.create(taboo_set=taboo_set, target=target_word)
                 added_count = 0
 
-                for i in range(1, 8):  # Taboo 1 to 7
+                for i in range(1, 8):
                     key = f"Taboo {i}"
-                    if row.get(key):
-                        taboo_word = get_word(row[key])
-                        if taboo_word:
-                            TabooCardTabooWord.objects.create(card=card, taboo_word=taboo_word)
-                            added_count += 1
-                        else:
-                            self.stdout.write(self.style.WARNING(
-                                f"   ↳ Taboo word not found: {row[key]} (card: {target_word.word})"
-                            ))
+                    word = row.get(key)
+                    taboo_word = get_word(word) if word else None
+
+                    if taboo_word:
+                        TabooCardTabooWord.objects.create(card=card, taboo_word=taboo_word)
+                        added_count += 1
+                    elif word:
+                        self.stdout.write(self.style.WARNING(
+                            f"   ↳ Taboo word not found or invalid: '{word}' (card: {target_word.word})"
+                        ))
 
                 if added_count < 1:
                     self.stdout.write(self.style.WARNING(
