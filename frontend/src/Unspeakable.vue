@@ -34,9 +34,6 @@
           Start
         </button>
 
-        <button @click="playSound" class="btn btn-primary w-full">
-          W
-        </button>
       </div>
       <div v-else class="grid grid-cols-2 gap-4 mt-6">
         <button @click="nextCard(-1)" class="btn btn-primary btn-outline w-full">
@@ -187,7 +184,7 @@ const startCountdown = () => {
     totalSeconds--
     if (totalSeconds <= 0) {
       clearInterval(countdownInterval)
-      playSound()
+      playSound('whistle.m4a')
       roundHasStarted.value = false
       totalSeconds = 0
     }
@@ -196,8 +193,8 @@ const startCountdown = () => {
   }, 1000)
 }
 
-const playSound = () => {
-  const whistleSFX = new Audio('/whistle.m4a')
+const playSound = (file) => {
+  const whistleSFX = new Audio(`https://storage.googleapis.com/le-assets/sounds/${file}`)
   whistleSFX.play()
 }
 // Get available sets
