@@ -25,14 +25,15 @@ class Command(BaseCommand):
         taboo_set, _ = TabooSet.objects.get_or_create(name=set_name, owner=user, language=language)
 
         def get_word(word_str):
-            word_str = word_str.strip()
+            word_str = word_str.strip().lower()
             if not word_str:
                 return None
-            word_obj, _ = Word.objects.get_or_create(word__iexact=word_str, language=language, defaults={
-                'word': word_str,
-                'part_of_speech': 'noun'  # or guess/detect if you want
-            })
-            return word_obj
+            try:
+                return Word.objects.get(word=word_str, language=language)
+            except Word.DoesNotExist:
+                return None
+            except Word.MultipleObjectsReturned:
+                return Word.objects.filter(word=word_str, language=language).first()
 
         with open(csv_path, newline='', encoding='utf-8') as file:
             reader = csv.DictReader(file)

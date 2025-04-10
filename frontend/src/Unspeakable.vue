@@ -1,61 +1,73 @@
 <template>
-  <div class="flex flex-col lg:flex-row gap-6 max-w-5xl mx-auto my-10 px-4">
+<div class="mt-4">
+  <h1 class="unspeakable">UNSPEAKABLE</h1>
+  <div class="flex flex-col lg:flex-row gap-6 max-w-5xl mx-auto mb-10 mt-2 px-4">
     <!-- Left panel: Game card -->
-    <div class="flex-2">
+    <div class="flex-7">
       <div class="card bg-base-200">
-        <div class="card-body min-h-[400px]">
-          <h2 class="card-title text-3xl mb-2">{{ currentCard?.target }}</h2>
-
-          <div v-if="currentCard" class="mt-4 space-y-2">
-            <ul class="list">
-              <li
-                v-for="(word, index) in visibleTabooWords"
-                :key="index"
-                class="text-xl"
+        <div class="card-body min-h-[380px]">
+          <div class="grid grid-cols-4">
+            <div class="col-span-3">
+              <p class="text-xs">Describe:</p>
+              <h2 class="card-title text-3xl mb-2">{{ currentCard?.target }}</h2>
+              <p class="text-xs mt-6">without saying:</p>
+              <ul v-if="currentCard" class="list mt-1">
+                <li
+                  v-for="(word, index) in visibleTabooWords"
+                  :key="index"
+                  class="text-xl"
+                >
+                  {{ word }}
+                </li>
+              </ul>
+              <p
+                v-if="remainingCards.length === 0 && currentCard"
+                class="mt-4 text-sm text-gray-500"
               >
-                {{ word }}
-              </li>
-            </ul>
-          </div>
+                You've reached the end of the set!
+              </p>
+            </div>
 
-          <p
-            v-if="remainingCards.length === 0 && currentCard"
-            class="mt-4 text-sm text-gray-500"
-          >
-            You've reached the end of the set!
-          </p>
+            <div class="h-[64px] w-[64px] col-span-1 card bg-base-100 border border-accent text-center justify-self-end">
+              <p class="text-xs mt-1">Score:</p>
+              <p class="text-4xl text-accent font-bold mb-1">{{ score }}</p>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- Bottom action buttons -->
       <!-- Show the "Start" button if round hasn't started, otherwise show Pass/Got it -->
-      <div v-if="!roundHasStarted" class="mt-6">
-        <button @click="startRound" class="btn btn-primary w-full">
-          Start
-        </button>
 
+      <div class="grid grid-cols-3 gap-4 mt-6">
+        <div v-if="!roundHasStarted" class="col-span-2">
+          <button @click="startRound" class="btn btn-primary w-full">
+            Start
+          </button>
+        </div>
+        <div v-else class="col-span-2">
+          <div class="grid grid-cols-2 gap-4">
+            <button @click="nextCard(-1)" class="btn btn-primary btn-outline w-full">
+              Pass
+            </button>
+            <button @click="nextCard(1)" class="btn btn-secondary btn-outline w-full">
+              Got it!
+            </button>
+          </div>
+        </div>
+        
+        <div class="font-mono text-xl flex items-center justify-center">
+            {{ formattedMinutes }}:{{ formattedSeconds }} 
+        </div>
       </div>
-      <div v-else class="grid grid-cols-2 gap-4 mt-6">
-        <button @click="nextCard(-1)" class="btn btn-primary btn-outline w-full">
-          Pass
-        </button>
-        <button @click="nextCard(1)" class="btn btn-secondary btn-outline w-full">
-          Got it!
-        </button>
-      </div>
+
+     
     </div>
 
     <!-- Right panel: Settings -->
-    <div class="flex-1">
-
-      <!-- Score -->
-      <div class="mt-6 mb-12 min-h-[80px] text-center">
-        <p class="text-xs">Score:</p>
-        <p class="text-4xl font-bold">{{ score }}</p>
-      </div>
-
+    <div class="flex-3">
       <!-- Set Selector Dropdown -->
-      <div class="mb-4">
+      <div class="mt-8 mb-4">
         <select class="select select-bordered w-full" v-model="selectedSetId">
           <option
             v-for="set in availableSets"
@@ -71,7 +83,7 @@
        <div class="mb-4">
         <label class="label">
           <span class="label-text">
-            Number of unspeakable words: {{ tabooWordCount }}
+            Unspeakable words: {{ tabooWordCount }}
           </span>
         </label>
         <input
@@ -100,14 +112,10 @@
           class="range range-xs range-neutral"
         />
       </div>
-
-      <div class="my-6 text-center">
-        <span class="font-mono text-xl">
-          {{ formattedMinutes }}:{{ formattedSeconds }} 
-        </span>
-      </div>
     </div>
   </div>
+</div>
+  
 </template>
 
 <script setup>
