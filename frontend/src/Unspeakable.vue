@@ -1,5 +1,5 @@
 <template>
-<div class="mt-4">
+<div class="mt-4 unspeakable-text">
   <h1 class="unspeakable">UNSPEAKABLE</h1>
   <div class="flex flex-col lg:flex-row gap-6 max-w-5xl mx-auto mb-10 mt-2 px-4">
     <!-- Left panel: Game card -->
@@ -15,7 +15,7 @@
                 <li
                   v-for="(word, index) in visibleTabooWords"
                   :key="index"
-                  class="text-xl"
+                  class="text-xl unspeakable-text"
                 >
                   {{ word }}
                 </li>
@@ -67,7 +67,7 @@
     <!-- Right panel: Settings -->
     <div class="flex-3">
       <!-- Set Selector Dropdown -->
-      <div class="mt-8 mb-4">
+      <div class="mt-8 mb-8">
         <select class="select select-bordered w-full" v-model="selectedSetId">
           <option
             v-for="set in availableSets"

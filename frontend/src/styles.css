@@ -20,10 +20,14 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow:
-    2px 2px 0 #fff,           /* bold black offset */
-    4px 4px 0 #990000,        /* blood red shadow */
-    0 0 12px rgba(255, 0, 0, 0.3); /* faint outer glow */
+    2px 2px 0 #ff8585,           /* bold black offset */
+    4px 4px 0 #990000;        /* blood red shadow */
+    /* 0 0 12px rgba(255, 0, 0, 0.3); faint outer glow */
   text-align: center;
+}
+
+.unspeakable-text {
+    font-family: 'Bitter';
 }
 
   
