@@ -1,57 +1,59 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- Header Section -->
-<header class="text-center mt-6">
-  <p class="text-base-content">
-    A collection of AI Drills to help you practise your {{ request.organisation.language }}. Open them directly in ChatGPT or
-    copy the prompt to use in your app of choice. Remember kids, AI makes mistakes and has no soul
-    or feelings, so feel free to argue with it!
-  </p>
-</header>
+{% include "partials/navigation.html" %}
+<main class="container max-w-4xl mx-auto px-4">
+  <!-- Header Section -->
+  <header class="text-center mt-6">
+    <p class="text-base-content">
+      A collection of AI Drills to help you practise your {{ request.organisation.language }}. Open them directly in ChatGPT or
+      copy the prompt to use in your app of choice. Remember kids, AI makes mistakes and has no soul
+      or feelings, so feel free to argue with it!
+    </p>
+  </header>
 
-<div class="divider"></div>
+  <div class="divider"></div>
 
-<!-- Prompts List -->
-<div class="mt-10">
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-    {% for prompt in prompts %}
-    <div class="card card-sm border border-gray-700 relative">
-      <!-- Image Section with Badge -->
-      <figure class="relative">
-        <img
-          src="{{ prompt.image_url }}"
-          class="w-full h-40 object-cover rounded-t-lg"
-          alt="Prompt image"
-        />
-        <!-- Badge (Overlaying Image) -->
-        <div class="badge bg-{{ prompt.level|lower }} border-none text-white font-bold absolute top-2 right-2">
-          {{ prompt.level }}
-        </div>
-      </figure>
+  <!-- Prompts List -->
+  <div class="mt-10">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      {% for prompt in prompts %}
+      <div class="card card-sm border border-gray-700 relative">
+        <!-- Image Section with Badge -->
+        <figure class="relative">
+          <img
+            src="{{ prompt.image_url }}"
+            class="w-full h-40 object-cover rounded-t-lg"
+            alt="Prompt image"
+          />
+          <!-- Badge (Overlaying Image) -->
+          <div class="badge bg-{{ prompt.level|lower }} border-none text-white font-bold absolute top-2 right-2">
+            {{ prompt.level }}
+          </div>
+        </figure>
 
-      <div class="card-body">
-        <!-- Title -->
-        <a href="{% url 'prompt_detail' slug=prompt.slug %}">
-          <h2 class="card-title text-lg font-semibold">{{ prompt.title }}</h2>
-        </a>
-  
-        <!-- Action Buttons -->
-        <div class="flex items-center gap-3 mt-3">
-          <!-- ChatGPT Button -->
-          <button class="btn btn-primary" onclick="openChatGPT('{{ prompt.content|escapejs }}')">
-            Open in ChatGPT
-          </button>
-  
-          <!-- Copy Button -->
-          <i data-lucide="copy" class="cursor-pointer" onclick="copyToClipboard('{{ prompt.content|escapejs }}', this)"></i>
+        <div class="card-body">
+          <!-- Title -->
+          <a href="{% url 'prompt_detail' slug=prompt.slug %}">
+            <h2 class="card-title text-lg font-semibold">{{ prompt.title }}</h2>
+          </a>
+    
+          <!-- Action Buttons -->
+          <div class="flex items-center gap-3 mt-3">
+            <!-- ChatGPT Button -->
+            <button class="btn btn-primary" onclick="openChatGPT('{{ prompt.content|escapejs }}')">
+              Open in ChatGPT
+            </button>
+    
+            <!-- Copy Button -->
+            <i data-lucide="copy" class="cursor-pointer" onclick="copyToClipboard('{{ prompt.content|escapejs }}', this)"></i>
+          </div>
         </div>
       </div>
+      {% endfor %}
     </div>
-    {% endfor %}
   </div>
-</div>
-
+</main>
 
 <script>
 

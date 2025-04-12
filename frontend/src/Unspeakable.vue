@@ -1,39 +1,36 @@
 <template>
-<div class="mt-4 unspeakable-text">
-  <h1 class="unspeakable">UNSPEAKABLE</h1>
-  <div class="flex flex-col lg:flex-row gap-6 max-w-5xl mx-auto mb-10 mt-2 px-4">
+<div class="mt-8 unspeakable-text">
+  <h1 class="opti text-center">UNSPEAKABLE</h1>
+  <div class="flex flex-col lg:flex-row gap-6 max-w-5xl mx-auto mb-10 mt-8 px-4">
     <!-- Left panel: Game card -->
     <div class="flex-7">
-      <div class="card bg-base-200">
-        <div class="card-body min-h-[380px]">
-          <div class="grid grid-cols-4">
-            <div class="col-span-3">
-              <p class="text-xs">Describe:</p>
-              <h2 class="card-title text-3xl mb-2">{{ currentCard?.target }}</h2>
-              <p class="text-xs mt-6">without saying:</p>
-              <ul v-if="currentCard" class="list mt-1">
-                <li
-                  v-for="(word, index) in visibleTabooWords"
-                  :key="index"
-                  class="text-xl unspeakable-text"
-                >
-                  {{ word }}
-                </li>
-              </ul>
-              <p
-                v-if="remainingCards.length === 0 && currentCard"
-                class="mt-4 text-sm text-gray-500"
-              >
-                You've reached the end of the set!
-              </p>
-            </div>
-
-            <div class="h-[64px] w-[64px] col-span-1 card bg-base-100 border border-accent text-center justify-self-end">
-              <p class="text-xs mt-1">Score:</p>
-              <p class="text-4xl text-accent font-bold mb-1">{{ score }}</p>
-            </div>
-          </div>
+      <div class="grid grid-cols-4 h-[315px]">
+        <div class="col-span-3">
+          <p class="text-xs">Describe:</p>
+          <h2 class="text-3xl mb-2 h-[36px]">{{ currentCard?.target }}</h2>
+          <p class="text-xs mt-6">without saying:</p>
+          <ul v-if="currentCard" class="list mt-1">
+            <li
+              v-for="(word, index) in visibleTabooWords"
+              :key="index"
+              class="text-xl unspeakable-text"
+            >
+              {{ word }}
+            </li>
+          </ul>
+          <p
+            v-if="remainingCards.length === 0 && currentCard"
+            class="mt-4 text-sm text-gray-500"
+          >
+            You've reached the end of the set!
+          </p>
         </div>
+
+        <div class="h-[64px] w-[64px] col-span-1 card bg-base-100 text-center justify-self-end">
+          <p class="text-xs mt-1">Score:</p>
+          <p class="text-4xl text-accent font-bold mb-1">{{ score }}</p>
+        </div>
+
       </div>
 
       <!-- Bottom action buttons -->
@@ -41,7 +38,7 @@
 
       <div class="grid grid-cols-3 gap-4 mt-6">
         <div v-if="!roundHasStarted" class="col-span-2">
-          <button @click="startRound" class="btn btn-primary w-full">
+          <button @click="startRound" class="btn btn-outline btn-accent w-full">
             Start
           </button>
         </div>

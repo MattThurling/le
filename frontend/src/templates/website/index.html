@@ -1,17 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="hero bg-base-200 min-h-[50vh] mt-6">
-  <div class="hero-content text-center">
-    <div class="max-w-md">
-      <h1 class="text-5xl font-bold">Coming Soon</h1>
-      <p class="py-6">
-        A new approach to language learning, using research-backed techniques to help you achieve your goals.
-      </p>
-      <a href="mailto:hello@largeenglish.com" class="btn btn-primary">
-        Join the waiting list
-      </a>
+{% include "partials/navigation.html" %}
+<main class="container max-w-4xl mx-auto px-4">
+  <div class="hero bg-base-200 min-h-[50vh] mt-6">
+    <div class="hero-content text-center">
+      <div class="max-w-md">
+        <h1 class="text-5xl font-bold">Coming Soon</h1>
+        <p class="py-6">
+          A new approach to language learning, using research-backed techniques to help you achieve your goals.
+        </p>
+        <a href="mailto:hello@largeenglish.com" class="btn btn-primary">
+          Join the waiting list
+        </a>
+      </div>
     </div>
   </div>
-</div>
+</main>
 {% endblock %}

@@ -1,5 +1,12 @@
 @import "tailwindcss";
 @plugin "daisyui";
+@font-face {
+    font-family: 'OptiSans';
+    src: url('https://storage.googleapis.com/le-assets/fonts/OptiSans/OPTISansSerif-Shaded.ttf.woff') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
  
 .bg-a1 { background-color: #79A8E6; }
 .bg-a2 { background-color: #4781E6; }
@@ -27,8 +34,14 @@
 }
 
 .unspeakable-text {
-    font-family: 'Bitter';
+    font-family: 'Libre Baskerville';
 }
+
+.opti {
+    font-family: 'OptiSans';
+    font-size: 48px;
+}
+
 
   
 
