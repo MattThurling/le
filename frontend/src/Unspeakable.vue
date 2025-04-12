@@ -184,6 +184,7 @@ const startRound = () => {
   roundHasStarted.value = true
   resetTimer()
   score.value = 0
+  playSound('gong.mp3')
   startCountdown()
 }
 
@@ -205,8 +206,8 @@ const startCountdown = () => {
 }
 
 const playSound = (file) => {
-  const whistleSFX = new Audio(`https://storage.googleapis.com/le-assets/sounds/${file}`)
-  whistleSFX.play()
+  const sfx = new Audio(`https://storage.googleapis.com/le-assets/sounds/${file}`)
+  sfx.play()
 }
 // Get available sets
 const fetchSets = async () => {
@@ -232,6 +233,8 @@ const shuffle = (array) => {
 
 
 const nextCard = (points = 0) => {
+  if (points === 1) playSound('gotit.mp3')
+  if (points === -1) playSound('quack.mp3')
   score.value += points
   if (remainingCards.value.length === 0) {
     currentCard.value = null
