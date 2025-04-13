@@ -7,7 +7,7 @@
       <div class="grid grid-cols-4 h-[315px]">
         <div class="col-span-3">
           <p class="text-xs">Describe:</p>
-          <h2 class="text-3xl mb-2 h-[36px]">{{ currentCard?.target }}</h2>
+          <h2 class="text-3xl mt-1 mb-2 h-[36px]">{{ currentCard?.target }}</h2>
           <p class="text-xs mt-6">without saying:</p>
           <ul v-if="currentCard" class="list mt-1">
             <li
@@ -28,7 +28,7 @@
 
         <div class="h-[64px] w-[64px] col-span-1 card bg-base-100 text-center justify-self-end">
           <p class="text-xs mt-1">Score:</p>
-          <p class="text-4xl text-accent font-bold mb-1">{{ score }}</p>
+          <p class="text-4xl text-accent font-bold mt-1 mb-1">{{ score }}</p>
         </div>
 
       </div>
