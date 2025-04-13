@@ -144,6 +144,25 @@ const timerMinutes = ref(1)
 const timerSeconds = ref(30)
 let countdownInterval = null
 
+const sounds = {
+  gong: 'gong.mp3',
+  whistle: 'whistle.m4a',
+  right: 'gotit.mp3',
+  wrong: 'quack.mp3',
+}
+
+const sfx = {}
+const sfxLoaded = ref(false)
+
+const loadSfx = () => {
+  if (sfxLoaded.value) return
+  for (const [key, path] of Object.entries(sounds)) {
+    const audio = new Audio(`https://storage.googleapis.com/le-assets/sounds/${path}`)
+    audio.load()
+    sfx[key] = audio
+  }
+  sfxLoaded.value = true
+}
 
 // The array goes from 30s to 300s (5 mins), in 30s increments:
 const timeOptions = [30, 60, 90, 120, 150, 180, 210, 240, 270, 300]
@@ -184,7 +203,7 @@ const startRound = () => {
   roundHasStarted.value = true
   resetTimer()
   score.value = 0
-  playSound('gong.mp3')
+  playSfx('gong')
   startCountdown()
 }
 
@@ -198,16 +217,23 @@ const startCountdown = () => {
     if (totalSeconds <= 0) {
       clearInterval(countdownInterval)
       roundHasStarted.value = false
-      playSound('whistle.m4a')
+      playSfx('whistle')
     }
     timerMinutes.value = Math.floor(totalSeconds / 60)
     timerSeconds.value = totalSeconds % 60
   }, 1000)
 }
 
-const playSound = (file) => {
-  const sfx = new Audio(`https://storage.googleapis.com/le-assets/sounds/${file}`)
-  sfx.play()
+const playSfx = (name) => {
+  if (!sfx[name]) {
+    console.warn(`Sound "${name}" not loaded`);
+    return;
+  }
+  // Clone for overlapping playback
+  const clone = sfx[name].cloneNode();
+  clone.play().catch(err => {
+    console.warn(`Could not play sound "${name}":`, err)
+  })
 }
 // Get available sets
 const fetchSets = async () => {
@@ -233,8 +259,8 @@ const shuffle = (array) => {
 
 
 const nextCard = (points = 0) => {
-  if (points === 1) playSound('gotit.mp3')
-  if (points === -1) playSound('quack.mp3')
+  if (points === 1) playSfx('right')
+  if (points === -1) playSfx('wrong')
   score.value += points
   if (remainingCards.value.length === 0) {
     currentCard.value = null
@@ -244,6 +270,7 @@ const nextCard = (points = 0) => {
 }
 
 onMounted(() => {
+  document.addEventListener('click', loadSfx, { once: true });
   fetchSets()
   fetchCards()
 })
