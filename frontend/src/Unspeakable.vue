@@ -4,7 +4,7 @@
   <div class="flex flex-col lg:flex-row gap-6 max-w-5xl mx-auto mb-10 mt-8 px-4">
     <!-- Left panel: Game card -->
     <div class="flex-7">
-      <div class="grid grid-cols-4 h-[315px]">
+      <div v-if="roundHasStarted" class="grid grid-cols-4 h-[315px]">
         <div class="col-span-3">
           <p class="text-xs">Describe:</p>
           <h2 class="text-3xl mt-1 mb-2 h-[36px]">{{ currentCard?.target }}</h2>
@@ -32,14 +32,22 @@
         </div>
 
       </div>
+      <div v-else class="flex justify-center h-[315px]">
+        <img src="https://storage.googleapis.com/le-assets/images/ravenflip.jpg" width="200px" alt="raven">
+      </div>
 
       <!-- Bottom action buttons -->
       <!-- Show the "Start" button if round hasn't started, otherwise show Pass/Got it -->
 
       <div class="grid grid-cols-3 gap-4 mt-6">
         <div v-if="!roundHasStarted" class="col-span-2">
-          <button @click="startRound" class="btn btn-outline btn-accent w-full">
-            Start
+          <button
+            @click="startRound"
+            class="btn btn-outline btn-accent w-full"
+            :disabled="!selectedSetId || isLoadingCards || remainingCards.length === 0"
+          >
+            <span v-if="!isLoadingCards">Start</span>
+            <span v-else class="loading loading-spinner loading-sm"></span>
           </button>
         </div>
         <div v-else class="col-span-2">
@@ -66,6 +74,9 @@
       <!-- Set Selector Dropdown -->
       <div class="mt-8 mb-8">
         <select class="select select-bordered w-full" v-model="selectedSetId">
+          <option disabled :selected="!selectedSetId" :value="null">
+            Choose a set of words...
+          </option>
           <option
             v-for="set in availableSets"
             :key="set.id"
@@ -129,7 +140,7 @@ const props = defineProps({
 
 const availableSets = ref([{ id: 1, name: 'English' }])
 
-const selectedSetId = ref(1)
+const selectedSetId = ref(null)
 
 const score = ref(0)
 
@@ -144,11 +155,18 @@ const timerMinutes = ref(1)
 const timerSeconds = ref(30)
 let countdownInterval = null
 
+const isLoadingCards = ref(false)
+
 const sounds = {
   gong: 'gong.mp3',
   whistle: 'whistle.m4a',
   right: 'gotit.mp3',
   wrong: 'quack.mp3',
+  crow1: 'crow1.m4a',
+  crow2: 'crow2.m4a',
+  crow3: 'crow3.m4a',
+  crow4: 'crow5.m4a',
+  crow5: 'crow6.m4a'
 }
 
 const sfx = {}
@@ -243,10 +261,19 @@ const fetchSets = async () => {
 
 // Card fetching and shuffling
 const fetchCards = async (setId = selectedSetId.value) => {
-  const response = await publicApi.get(`sets/${setId}/cards/`)
-  const cards = response.data
-  remainingCards.value = shuffle(cards)
-  nextCard()
+  remainingCards.value = []
+  currentCard.value = null
+  isLoadingCards.value = true
+  try {
+    const response = await publicApi.get(`sets/${setId}/cards/`)
+    const cards = response.data
+    remainingCards.value = shuffle(cards)
+    nextCard()
+  } catch (error) {
+    console.error("Failed to fetch cards", error)
+  } finally {
+    isLoadingCards.value = false
+  }
 }
 
 const shuffle = (array) => {
@@ -260,7 +287,7 @@ const shuffle = (array) => {
 
 const nextCard = (points = 0) => {
   if (points === 1) playSfx('right')
-  if (points === -1) playSfx('wrong')
+  if (points === -1) playSfx(`crow${Math.floor(Math.random() * 5) + 1}`)
   score.value += points
   if (remainingCards.value.length === 0) {
     currentCard.value = null

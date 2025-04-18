@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Prompt, Page, Post, TimeLog
+from .models import Prompt, Page, Post, Language, TabooSet, Word, TabooCard, TabooCardTabooWord
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, FormView
@@ -8,6 +8,9 @@ from .forms import TimeLogForm
 from django.contrib.auth import login
 from .forms import RegisterForm
 from django.contrib.auth.views import LoginView
+from .openai.api import generate_set
+from django.contrib import messages
+import json
 
 def register_view(request):
     if request.user.is_authenticated:  # Redirect if already logged in
@@ -77,3 +80,84 @@ def post_detail(request, slug):
 
 def unspeakable(request):
   return render(request, 'website/unspeakable.html')
+
+
+@login_required
+def manager_view(request):
+  languages = Language.objects.all()
+  cards = None
+  selected_language = None
+  selected_theme = None
+
+  if request.method == "POST":
+    action = request.POST.get("action", "").strip()
+    selected_theme = request.POST.get("theme", "").strip()
+
+    if action == "generate":
+      language_id = request.POST.get("language")
+      try:
+        selected_language = Language.objects.get(pk=language_id)
+      except Language.DoesNotExist:
+        messages.error(request, "⚠️ Invalid language selected.")
+        return redirect("manager")
+
+    if action == "generate":
+      try:
+        count = int(request.POST.get("count", 30))
+        generated = generate_set(selected_language.name, selected_theme, count)
+        cards = generated['cards']
+        request.session["generated_cards"] = cards
+        request.session["selected_language_id"] = selected_language.id
+        request.session["selected_theme"] = selected_theme
+        messages.success(request, f"Generated {len(cards)} cards for theme '{selected_theme}' in {selected_language.name}.")
+      except Exception as e:
+        messages.error(request, f"❌ OpenAI generation failed: {str(e)}")
+
+    elif action == "save_set":
+      cards = request.session.get("generated_cards")
+      lang_id = request.session.get("selected_language_id")
+      selected_theme = request.session.get("selected_theme")
+
+      if not cards or not lang_id:
+        messages.error(request, "⚠️ No cards to save — please generate first.")
+        return redirect("manager")
+
+      try:
+        language = Language.objects.get(pk=lang_id)
+        taboo_set = TabooSet.objects.create(
+          name=f"{selected_theme.title()} ({language.name})",
+          owner=request.user,
+          language=language
+        )
+
+        for card_data in cards:
+          target_word, _ = Word.objects.get_or_create(
+            word=card_data["target"].strip().lower(),
+            language=language,
+            defaults={"part_of_speech": "noun"}
+          )
+          card = TabooCard.objects.create(taboo_set=taboo_set, target=target_word)
+
+          for taboo in set(card_data["taboo_words"]):
+            taboo_word, _ = Word.objects.get_or_create(
+              word=taboo.strip().lower(),
+              language=language,
+              defaults={"part_of_speech": "noun"}
+            )
+            TabooCardTabooWord.objects.create(card=card, taboo_word=taboo_word)
+
+        for key in ["generated_cards", "selected_language_id", "selected_theme"]:
+          request.session.pop(key, None)
+
+        messages.success(request, f"✅ Set '{taboo_set.name}' saved with {len(cards)} cards.")
+        return redirect("manager")
+
+      except Exception as e:
+        messages.error(request, f"❌ Failed to save set: {str(e)}")
+
+  return render(request, "website/manager.html", {
+    "languages": languages,
+    "cards": cards,
+    "selected_language": selected_language,
+    "selected_theme": selected_theme,
+  })

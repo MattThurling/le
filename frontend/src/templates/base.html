@@ -34,6 +34,15 @@
 	</script>
 
 	<body>
+		{% if messages %}
+		<div class="mb-4 space-y-2">
+			{% for message in messages %}
+			<div class="alert alert-{{ message.tags }}">
+				{{ message }}
+			</div>
+			{% endfor %}
+		</div>
+		{% endif %}
 		{% block content %}{% endblock %}
 		<script>
 			// Initialize Lucide Icons
