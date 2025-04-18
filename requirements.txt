@@ -9,4 +9,5 @@ djangorestframework
 pytest
 pytest-django
 factory_boy>=3.3.0
+openai
 
