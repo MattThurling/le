@@ -78,7 +78,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: test  # ✅ only run this if tests pass
+    needs: [test, frontend]  # ✅ only run this if tests pass
 
     steps:
       - name: Checkout Repository
