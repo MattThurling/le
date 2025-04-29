@@ -32,8 +32,12 @@
         </div>
 
       </div>
-      <div v-else class="flex justify-center h-[315px]">
+      <div v-if="!selectedSetId && !roundHasStarted" class="flex justify-center h-[315px]">
         <img src="https://storage.googleapis.com/le-assets/images/ravenflip.jpg" width="200px" alt="raven">
+      </div>
+      <div v-if="selectedSetId && !roundHasStarted" class="h-[315px]">
+        <p class="text-center mt-8">Score:</p>
+        <p class="text-9xl text-center text-accent font-bold mt-1 mb-1">{{ score }}</p>
       </div>
 
       <!-- Bottom action buttons -->
