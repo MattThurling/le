@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="h-screen bg-base-200">
+  <div class="flex h-full">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-base-100 shadow-lg p-4">
+      <div class="text-xl font-bold mb-4">SFL</div>
+      <ul class="menu p-0 space-y-2">
+        <li class="text-gray-400 pointer-events-none">
+          <a href="#students" onclick="showPage('students')">
+            <i data-lucide="users" class="w-5 h-5 mr-2"></i>
+            Students
+          </a>
+        </li>
+
+        <li>
+          <details open>
+            <summary>
+              <i data-lucide="dice-5" class="w-5 h-5 mr-2"></i>
+              Games
+            </summary>
+            <ul class="ml-6">
+              <li>
+                <a href="#unspeakable" onclick="showPage('unspeakable')">
+                  <i data-lucide="message-circle-off" class="w-4 h-4 mr-2"></i>
+                  Unspeakable
+                </a>
+              </li>
+              <li class="text-gray-400 pointer-events-none">
+                <a>
+                  <i data-lucide="spell-check-2" class="w-4 h-4 mr-2"></i>
+                  Acrocity
+                </a>
+              </li>
+              <li class="text-gray-400 pointer-events-none">
+                <a>
+                  <i data-lucide="share-2" class="w-4 h-4 mr-2"></i>
+                  Convergence
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li class="text-gray-400 pointer-events-none">
+          <a href="#drills">
+            <i data-lucide="drum" class="w-5 h-5 mr-2"></i>
+            Drills
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6 overflow-y-auto">
+      <div id="unspeakable" class="page">Welcome to Unspeakable!</div>
+    </main>
+  </div>
+</div>
+{% endblock %}

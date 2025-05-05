@@ -10,7 +10,7 @@ from .forms import RegisterForm
 from django.contrib.auth.views import LoginView
 from .openai.api import generate_set
 from django.contrib import messages
-import json
+
 
 def register_view(request):
     if request.user.is_authenticated:  # Redirect if already logged in
@@ -81,6 +81,10 @@ def post_detail(request, slug):
 def unspeakable(request):
   return render(request, 'website/unspeakable.html')
 
+def dashboard_view(request):
+  return render(request, 'website/dashboard.html')
+   
+   
 
 @login_required
 def manager_view(request):

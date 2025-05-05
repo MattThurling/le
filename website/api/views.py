@@ -29,6 +29,6 @@ class TabooSetViewSet(viewsets.ReadOnlyModelViewSet):
     @action(detail=True, methods=["get"], url_path='cards')
     def cards(self, request, pk=None):
         taboo_set = self.get_object()
-        cards = taboo_set.cards.prefetch_related("taboo_links", "target").all()
+        cards = taboo_set.cards.select_related("target").prefetch_related("taboo_links__taboo_word").all()
         serializer = TabooCardSerializer(cards, many=True)
         return response.Response(serializer.data)

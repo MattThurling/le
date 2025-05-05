@@ -26,9 +26,17 @@
           </p>
         </div>
 
-        <div class="h-[64px] w-[64px] col-span-1 card bg-base-100 text-center justify-self-end">
-          <p class="text-xs mt-1">Score:</p>
-          <p class="text-4xl text-accent font-bold mt-1 mb-1">{{ score }}</p>
+        <div class="h-[64px] w-[64px] col-span-1 card bg-base-100 text-center justify-self-end pr-12">
+          <div class="flex justify-center gap-5">
+            <div class="text-center text-green-500">
+              <p class="text font-bold">{{ score.correct }}</p>
+              <Check :size="18" />
+            </div>
+            <div class="text-center text-red-500">
+              <p class="text font-bold">{{ score.passes }}</p>
+              <X :size="18" />
+            </div>
+          </div>
         </div>
 
       </div>
@@ -36,8 +44,22 @@
         <img src="https://storage.googleapis.com/le-assets/images/ravenflip.jpg" width="200px" alt="raven">
       </div>
       <div v-if="selectedSetId && !roundHasStarted" class="h-[315px]">
-        <p class="text-center mt-8">Score:</p>
-        <p class="text-9xl text-center text-accent font-bold mt-1 mb-1">{{ score }}</p>
+        <p class="text-center pt-7">Score:</p>
+        <p class="text-6xl text-center font-bold mt-1 mb-1">{{ gameScore.toLocaleString() }}</p>
+        <div class="flex justify-center gap-8">
+          <div class="text-center text-green-500">
+            <p class="text font-bold">{{ score.correct }}</p>
+            <Check :size="18" />
+          </div>
+          <div class="text-center text-red-500">
+            <p class="text font-bold">{{ score.passes }}</p>
+            <X :size="18" />
+          </div>
+          <div class="text-center">
+            <p class="text font-bold">{{ score.max }}</p>
+            <Zap :size="18" />
+          </div>
+        </div>
       </div>
 
       <!-- Bottom action buttons -->
@@ -47,7 +69,7 @@
         <div v-if="!roundHasStarted" class="col-span-2">
           <button
             @click="startRound"
-            class="btn btn-outline btn-accent w-full"
+            class="btn btn-outline w-full"
             :disabled="!selectedSetId || isLoadingCards || remainingCards.length === 0"
           >
             <span v-if="!isLoadingCards">Start</span>
@@ -56,10 +78,10 @@
         </div>
         <div v-else class="col-span-2">
           <div class="grid grid-cols-2 gap-4">
-            <button @click="nextCard(-1)" class="btn btn-primary btn-outline w-full">
+            <button @click="answer(false)" class="btn btn-red btn-outline w-full">
               Pass
             </button>
-            <button @click="nextCard(1)" class="btn btn-secondary btn-outline w-full">
+            <button @click="answer(true)" class="btn btn-green btn-outline w-full">
               Got it!
             </button>
           </div>
@@ -133,6 +155,7 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
 import { publicApi } from './api'
+import { Check, Zap, X } from 'lucide-vue-next'
 
 
 const props = defineProps({
@@ -146,7 +169,7 @@ const availableSets = ref([{ id: 1, name: 'English' }])
 
 const selectedSetId = ref(null)
 
-const score = ref(0)
+const score = ref({correct: 0, passes: 0, streak: 0, max: 0})
 
 // Cards data
 const remainingCards = ref([])
@@ -191,15 +214,6 @@ const timeOptions = [30, 60, 90, 120, 150, 180, 210, 240, 270, 300]
 // We'll use timeIndex (0..9) to pick from timeOptions:
 const timeIndex = ref(2)
 
-// A nicely formatted display of the currently selected time (e.g., "2:00")
-const selectedTimeDisplay = computed(() => {
-  const totalSeconds = timeOptions[timeIndex.value]
-  const mins = Math.floor(totalSeconds / 60)
-  const secs = totalSeconds % 60
-  return `${mins}:${secs.toString().padStart(2, '0')}`
-})
-
-
 // Whenever timeIndex changes, reset timerMinutes and timerSeconds
 watch(timeIndex, () => {
   resetTimer()
@@ -210,6 +224,19 @@ const resetTimer = () => {
   timerMinutes.value = Math.floor(totalSeconds / 60)
   timerSeconds.value = totalSeconds % 60
 }
+
+const resetScore = () => {
+  score.value = {correct: 0, passes: 0, streak: 0, max: 0}
+}
+
+const gameScore = computed(() => {
+  const { correct, passes, max } = score.value
+  const maxMultiplier = 750
+  const passPenalty = 750
+  const total = correct * (10000 + (max * maxMultiplier)) - (passPenalty * passes)
+  if (total < 0) return 0
+  return total
+})
 
 // Show only 'tabooWordCount' words
 const visibleTabooWords = computed(() => {
@@ -224,7 +251,7 @@ const formattedSeconds = computed(() => String(timerSeconds.value).padStart(2, '
 const startRound = () => {
   roundHasStarted.value = true
   resetTimer()
-  score.value = 0
+  resetScore()
   playSfx('gong')
   startCountdown()
 }
@@ -288,11 +315,22 @@ const shuffle = (array) => {
   return array
 }
 
+const answer = (isCorrect) => {
+  if (isCorrect) {
+    playSfx('right')
+    score.value.correct ++
+    score.value.streak ++
+    score.value.max = Math.max(score.value.streak, score.value.max)
+  }
+  if (!isCorrect) {
+    playSfx(`crow${Math.floor(Math.random() * 5) + 1}`)
+    score.value.passes ++
+    score.value.streak = 0
+  }
+  nextCard()
+}
 
-const nextCard = (points = 0) => {
-  if (points === 1) playSfx('right')
-  if (points === -1) playSfx(`crow${Math.floor(Math.random() * 5) + 1}`)
-  score.value += points
+const nextCard = () => {
   if (remainingCards.value.length === 0) {
     currentCard.value = null
     return

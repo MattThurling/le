@@ -20,19 +20,6 @@
     height: 36px;
 }
 
-.unspeakable {
-  font-family: 'Luckiest Guy', cursive;
-  font-size: 36px;
-  /* background: linear-gradient(to right, #f7c56d, #b67f27); gold gradient */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow:
-    2px 2px 0 #ff8585,           /* bold black offset */
-    4px 4px 0 #990000;        /* blood red shadow */
-    /* 0 0 12px rgba(255, 0, 0, 0.3); faint outer glow */
-  text-align: center;
-}
-
 .unspeakable-text {
     font-family: 'Libre Baskerville';
 }
@@ -42,6 +29,13 @@
     font-size: 48px;
 }
 
+.btn-red {
+  @apply btn btn-outline border-red-500 text-red-500 hover:bg-red-500 hover:text-white;
+}
+
+.btn-green {
+  @apply btn btn-outline border-green-500 text-green-500 hover:bg-green-500 hover:text-white;
+}
 
   
 
