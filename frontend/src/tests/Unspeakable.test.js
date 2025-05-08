@@ -3,6 +3,22 @@ import Unspeakable from '@/Unspeakable.vue'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import axios from 'axios'
 
+// Mock AudioContext globally
+globalThis.AudioContext = vi.fn().mockImplementation(() => ({
+  createOscillator: vi.fn().mockReturnValue({
+    connect: vi.fn(),
+    start: vi.fn(),
+    stop: vi.fn(),
+    frequency: { setValueAtTime: vi.fn() }
+  }),
+  createGain: vi.fn().mockReturnValue({
+    connect: vi.fn(),
+    gain: { setValueAtTime: vi.fn() }
+  }),
+  destination: {},
+  close: vi.fn()
+}));
+
 vi.mock('axios')
 
 describe('Unspeakable', () => {
