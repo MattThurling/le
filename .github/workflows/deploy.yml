@@ -111,6 +111,8 @@ jobs:
             --set-env-vars STORAGE_ROOT_URL=${{ secrets.STORAGE_ROOT_URL }} \
             --set-env-vars SECRET_KEY=${{ secrets.SECRET_KEY }} \
             --set-env-vars DEBUG=False \
-            --set-env-vars OPENAI_KEY=${{ secrets.OPENAI_KEY }}
+            --set-env-vars OPENAI_KEY=${{ secrets.OPENAI_KEY }} \
+            --set-env-vars BASE_DOMAIN=sfl.ai
+
 
 
