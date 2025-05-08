@@ -4,9 +4,10 @@ import os
 
 client = OpenAI(api_key=os.getenv('OPENAI_KEY'))
 
-def generate_set(language, theme, count):
+def generate_set(language, theme, count, level):
     prompt = f"""
     Generate a list of {count} Taboo-style cards in {language} on the theme of "{theme}".
+    Use words up to the CEFR level {level}.
     Each card must be a JSON object with two fields:
     - "target": the main word
     - "taboo_words": an array of exactly 7 common taboo words

@@ -31,9 +31,14 @@
           </div>
 
           <div>
-            <label class="label">Level</label>
-            <input type="text" name="theme" class="input input-bordered w-full"
-                   value="{{ selected_theme|default:'' }}" required />
+            <label class="label">Level (optional)</label>
+            <select name="level" class="select select-bordered w-full">
+              {% for level in levels %}
+                <option value="{{ level.id }}" {% if selected_level and level.id == selected_level.id %}selected{% endif %}>
+                  {{ level.code }}
+                </option>
+              {% endfor %}
+            </select>
           </div>
 
           <div>

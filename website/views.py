@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Prompt, Page, Post, Language, TabooSet, Word, TabooCard, TabooCardTabooWord
+from .models import Prompt, Page, Post, Language, TabooSet, Word, TabooCard, TabooCardTabooWord, Level
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, FormView
@@ -89,6 +89,7 @@ def dashboard_view(request):
 @login_required
 def manager_view(request):
   languages = Language.objects.all()
+  levels = Level.objects.all()
   cards = None
   selected_language = None
   selected_theme = None
@@ -104,11 +105,18 @@ def manager_view(request):
       except Language.DoesNotExist:
         messages.error(request, "⚠️ Invalid language selected.")
         return redirect("manager")
+      
+      level_id = request.POST.get("level")
+      try:
+        selected_level = Level.objects.get(pk=level_id)
+      except Level.DoesNotExist:
+        messages.error(request, "⚠️ Invalid level selected.")
+        return redirect("manager")
 
     if action == "generate":
       try:
         count = int(request.POST.get("count", 30))
-        generated = generate_set(selected_language.name, selected_theme, count)
+        generated = generate_set(selected_language.name, selected_theme, count, selected_level.code)
         cards = generated['cards']
         request.session["generated_cards"] = cards
         request.session["selected_language_id"] = selected_language.id
@@ -161,6 +169,7 @@ def manager_view(request):
 
   return render(request, "website/manager.html", {
     "languages": languages,
+    "levels": levels,
     "cards": cards,
     "selected_language": selected_language,
     "selected_theme": selected_theme,
