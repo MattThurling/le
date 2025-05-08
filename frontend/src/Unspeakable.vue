@@ -1,6 +1,18 @@
 <template>
 <div class="mt-8 unspeakable-text">
-  <h1 class="opti text-center">UNSPEAKABLE</h1>
+  <div class="flex">
+    <div class="flex-1">
+    </div>
+    <div class="flex-4">
+      <h1 class="opti text-center">UNSPEAKABLE</h1>
+    </div>
+    <div class="flex-1 flex justify-end">
+      <a href="/dashboard">
+        <Settings />
+      </a> 
+    </div>
+  </div>
+  
   <div class="flex flex-col lg:flex-row gap-6 max-w-5xl mx-auto mb-10 mt-8 px-4">
     <!-- Left panel: Game card -->
     <div class="flex-7">
@@ -44,8 +56,8 @@
         <img src="https://storage.googleapis.com/le-assets/images/ravenflip.jpg" width="200px" alt="raven">
       </div>
       <div v-if="selectedSetId && !roundHasStarted" class="h-[315px]">
-        <p class="text-center pt-7">Score:</p>
-        <p class="text-6xl text-center font-bold mt-1 mb-1">{{ gameScore.toLocaleString() }}</p>
+        <p class="text-center pt-7">{{ tallyMessage }}</p>
+        <p class="text-6xl text-center font-mono mt-1 mb-1">{{ finalScore.toLocaleString() }}</p>
         <div class="flex justify-center gap-8">
           <div class="text-center text-green-500">
             <p class="text font-bold">{{ score.correct }}</p>
@@ -155,7 +167,7 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
 import { publicApi } from './api'
-import { Check, Zap, X } from 'lucide-vue-next'
+import { Check, Zap, X, Settings } from 'lucide-vue-next'
 
 
 const props = defineProps({
@@ -171,6 +183,10 @@ const selectedSetId = ref(null)
 
 const score = ref({correct: 0, passes: 0, streak: 0, max: 0})
 
+const finalScore = ref(0)
+const scoreStage = ref(0)
+const tallyMessage = ref('Score')
+
 // Cards data
 const remainingCards = ref([])
 const currentCard = ref(null)
@@ -184,6 +200,11 @@ let countdownInterval = null
 
 const isLoadingCards = ref(false)
 
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
+const sfxBuffers = {}
+const activeLoops = {}
+
+
 const sounds = {
   gong: 'gong.mp3',
   whistle: 'whistle.m4a',
@@ -193,19 +214,22 @@ const sounds = {
   crow2: 'crow2.m4a',
   crow3: 'crow3.m4a',
   crow4: 'crow5.m4a',
-  crow5: 'crow6.m4a'
+  crow5: 'crow6.m4a',
+  base_tally: 'wooden_tally_loop_48.ogg',
+  bonus_tally: 'clicky_tally_loop.ogg',
+  fanfare: 'fanfare.ogg',
+  bell: 'doombell.ogg'
 }
 
-const sfx = {}
 const sfxLoaded = ref(false)
 
-const loadSfx = () => {
-  if (sfxLoaded.value) return
-  for (const [key, path] of Object.entries(sounds)) {
-    const audio = new Audio(`https://storage.googleapis.com/le-assets/sounds/${path}`)
-    audio.load()
-    sfx[key] = audio
+async function loadSfx() {
+  for (const [name, path] of Object.entries(sounds)) {
+    const res = await fetch(`https://storage.googleapis.com/le-assets/sounds/${path}`)
+    const buffer = await res.arrayBuffer();
+    sfxBuffers[name] = await audioCtx.decodeAudioData(buffer)
   }
+  Object.keys(sfxBuffers).forEach(warmUpSound)
   sfxLoaded.value = true
 }
 
@@ -267,23 +291,39 @@ const startCountdown = () => {
       clearInterval(countdownInterval)
       roundHasStarted.value = false
       playSfx('whistle')
+      animateScore()
     }
     timerMinutes.value = Math.floor(totalSeconds / 60)
     timerSeconds.value = totalSeconds % 60
   }, 1000)
 }
 
-const playSfx = (name) => {
-  if (!sfx[name]) {
-    console.warn(`Sound "${name}" not loaded`);
-    return;
+const playSfx = (name, loop = false) => {
+  if (!sfxBuffers[name]) {
+    console.warn(`Sound "${name}" not loaded`)
+    return null
   }
-  // Clone for overlapping playback
-  const clone = sfx[name].cloneNode();
-  clone.play().catch(err => {
-    console.warn(`Could not play sound "${name}":`, err)
-  })
+
+  const source = audioCtx.createBufferSource()
+  source.buffer = sfxBuffers[name]
+  source.loop = loop
+  source.connect(audioCtx.destination)
+  source.start(0)
+
+  if (loop) {
+    activeLoops[name] = source
+  }
+  return source
 }
+
+const warmUpSound = (name) => {
+  const source = audioCtx.createBufferSource();
+  source.buffer = sfxBuffers[name];
+  source.connect(audioCtx.destination);
+  source.start(audioCtx.currentTime + 0.001); // Start quickly but skip output
+  source.stop(audioCtx.currentTime + 0.002); // Kill it fast
+};
+
 // Get available sets
 const fetchSets = async () => {
   const response = await publicApi.get('sets')
@@ -347,4 +387,58 @@ onMounted(() => {
 watch(selectedSetId, async (newSetId) => {
   await fetchCards(newSetId)
 })
+
+const animateScore = async () => {
+
+  await new Promise(res => setTimeout(res, 2000))
+
+  const base = 10000 + score.value.correct * 1000
+  const bonus = 7500 + score.value.max * 75
+  const penalty = 15000 + score.value.passes * 75
+
+  finalScore.value = 0
+  scoreStage.value = 1
+
+  // Animate count up
+  tallyMessage.value = "Rewarding achievements..."
+  // playSfx('fanfare')
+  const b1 = playSfx('base_tally', true)
+  for (let i = 0; i <= base; i += 25) {
+    finalScore.value = i
+    await new Promise(res => setTimeout(res, 1))
+  }
+  b1.stop()
+  finalScore.value = base
+
+  await new Promise(res => setTimeout(res, 1000))
+
+  // Count up bonus
+  scoreStage.value = 2
+  let bonusStart = finalScore.value
+  playSfx('bell')
+  tallyMessage.value = "Punishing sins..."
+  const bonusTallySfx = playSfx('bonus_tally', true)
+  for (let i = 0; i <= bonus; i += 25) {
+    finalScore.value = bonusStart + i
+    await new Promise(res => setTimeout(res, 1))
+  }
+  bonusTallySfx.stop()
+  finalScore.value = bonusStart + bonus
+
+  await new Promise(res => setTimeout(res, 1000))
+
+  // Count down penalty
+  scoreStage.value = 3
+  tallyMessage.value = "Awarding a streak bonus so we end on a positive note..."
+  const b2 = playSfx('base_tally', true)
+  let penaltyStart = finalScore.value
+  for (let i = 0; i <= penalty; i += 25) {
+    finalScore.value = Math.max(0, penaltyStart - i)
+    await new Promise(res => setTimeout(res, 1))
+  }
+  finalScore.value = Math.max(0, penaltyStart - penalty)
+  b2.stop()
+  tallyMessage.value = "Congratulations! You scored:"
+}
+
 </script>

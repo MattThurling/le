@@ -37,7 +37,17 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/api': 'http://127.0.0.1:8000'
+      '/api': 'http://sfl.local:8000'
+    },
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        const origin = req.headers.origin;
+        if (origin && origin.endsWith('.sfl.local:8000')) {
+          res.setHeader('Access-Control-Allow-Origin', origin)
+          res.setHeader('Access-Control-Allow-Credentials', 'true')
+        }
+        next()
+      })
     }
   },
   test: {

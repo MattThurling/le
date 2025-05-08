@@ -9,6 +9,8 @@ DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "t", "yes")
 
 AUTH_USER_MODEL = 'website.User'
 
+BASE_DOMAIN=os.getenv("BASE_DOMAIN")
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,6 +23,7 @@ STORAGE_ROOT_URL = os.getenv("STORAGE_ROOT_URL")
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 ALLOWED_HOSTS = [
+    ".sfl.local",
     "largeenglish.com",
     "127.0.0.1",
     "le-330018731817.europe-west1.run.app",
@@ -103,6 +106,7 @@ TEMPLATES = [
 
 
 CSRF_TRUSTED_ORIGINS = [
+    "http://*.sfl.local:8000",
     "https://largeenglish.com",
     "http://localhost:5173",
     "https://*.sfl.ai",

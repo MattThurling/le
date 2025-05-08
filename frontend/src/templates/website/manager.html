@@ -31,6 +31,12 @@
           </div>
 
           <div>
+            <label class="label">Level</label>
+            <input type="text" name="theme" class="input input-bordered w-full"
+                   value="{{ selected_theme|default:'' }}" required />
+          </div>
+
+          <div>
             <label class="label">Number of Cards</label>
             <input type="number" name="count" value="30" min="1"
                    class="input input-bordered w-full" required />
