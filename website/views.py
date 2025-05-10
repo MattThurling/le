@@ -83,11 +83,17 @@ def unspeakable(request):
 
 def dashboard_view(request):
   return render(request, 'website/dashboard.html')
-   
-   
 
-@login_required
+
+# OpenAI Rate Limiting
+MAX_CALLS_PER_SESSION = 3 
+
+# @login_required
 def manager_view(request):
+  session = request.session
+  session.setdefault('openai_call_count', 0)
+  call_count = session.get('openai_call_count', 0)
+      
   languages = Language.objects.all()
   levels = Level.objects.all()
   cards = None
@@ -114,6 +120,9 @@ def manager_view(request):
         return redirect("manager")
 
     if action == "generate":
+      if session['openai_call_count'] >= MAX_CALLS_PER_SESSION:
+        messages.error(request, 'You’ve reached the maximum number of sets for this session.')
+        return render(request, 'website/manager.html')
       try:
         count = int(request.POST.get("count", 30))
         generated = generate_set(selected_language.name, selected_theme, count, selected_level.code)
@@ -124,7 +133,8 @@ def manager_view(request):
         messages.success(request, f"Generated {len(cards)} cards for theme '{selected_theme}' in {selected_language.name}.")
       except Exception as e:
         messages.error(request, f"❌ OpenAI generation failed: {str(e)}")
-
+      session['openai_call_count'] = call_count + 1
+      session.modified = True
     elif action == "save_set":
       cards = request.session.get("generated_cards")
       lang_id = request.session.get("selected_language_id")

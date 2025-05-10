@@ -26,7 +26,7 @@
 
           <div>
             <label class="label">Theme</label>
-            <input type="text" name="theme" class="input input-bordered w-full"
+            <input type="text" name="theme" maxlength="50" class="input input-bordered w-full"
                    value="{{ selected_theme|default:'' }}" required />
           </div>
 
@@ -43,7 +43,7 @@
 
           <div>
             <label class="label">Number of Cards</label>
-            <input type="number" name="count" value="30" min="1"
+            <input type="number" name="count" value="25" min="1" max="50"
                    class="input input-bordered w-full" required />
           </div>
 
@@ -52,6 +52,7 @@
             <span id="generate-text">Generate</span>
             <span id="generate-spinner" class="loading loading-spinner hidden"></span>
           </button>
+          <p>You’ve used {{ request.session.openai_call_count|default:0 }} of 3 allowed OpenAI calls.</p>
         </form>
       </div>
     </div>
