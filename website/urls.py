@@ -13,6 +13,5 @@ urlpatterns = [
   path('submit-timelog/', views.SubmitTimeLogView.as_view(), name='submit_timelog'),
   path('register/', views.register_view, name='register'),
   path('login/', views.CustomLoginView.as_view(), name='login'),
-  path('manager/', views.manager_view, name='manager'),
   path('dashboard/', views.dashboard_view, name='dashboard'),
 ]

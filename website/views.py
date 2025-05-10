@@ -81,15 +81,11 @@ def post_detail(request, slug):
 def unspeakable(request):
   return render(request, 'website/unspeakable.html')
 
-def dashboard_view(request):
-  return render(request, 'website/dashboard.html')
-
 
 # OpenAI Rate Limiting
 MAX_CALLS_PER_SESSION = 3 
 
-# @login_required
-def manager_view(request):
+def dashboard_view(request):
   session = request.session
   session.setdefault('openai_call_count', 0)
   call_count = session.get('openai_call_count', 0)
@@ -110,19 +106,19 @@ def manager_view(request):
         selected_language = Language.objects.get(pk=language_id)
       except Language.DoesNotExist:
         messages.error(request, "⚠️ Invalid language selected.")
-        return redirect("manager")
+        return redirect("dashboard")
       
       level_id = request.POST.get("level")
       try:
         selected_level = Level.objects.get(pk=level_id)
       except Level.DoesNotExist:
         messages.error(request, "⚠️ Invalid level selected.")
-        return redirect("manager")
+        return redirect("dashboard")
 
     if action == "generate":
       if session['openai_call_count'] >= MAX_CALLS_PER_SESSION:
         messages.error(request, 'You’ve reached the maximum number of sets for this session.')
-        return render(request, 'website/manager.html')
+        return render(request, 'website/dashboard.html')
       try:
         count = int(request.POST.get("count", 30))
         generated = generate_set(selected_language.name, selected_theme, count, selected_level.code)
@@ -142,7 +138,7 @@ def manager_view(request):
 
       if not cards or not lang_id:
         messages.error(request, "⚠️ No cards to save — please generate first.")
-        return redirect("manager")
+        return redirect("dashboard")
 
       try:
         language = Language.objects.get(pk=lang_id)
@@ -172,12 +168,12 @@ def manager_view(request):
           request.session.pop(key, None)
 
         messages.success(request, f"✅ Set '{taboo_set.name}' saved with {len(cards)} cards.")
-        return redirect("manager")
+        return redirect("dashboard")
 
       except Exception as e:
         messages.error(request, f"❌ Failed to save set: {str(e)}")
 
-  return render(request, "website/manager.html", {
+  return render(request, "website/dashboard.html", {
     "languages": languages,
     "levels": levels,
     "cards": cards,
