@@ -14,4 +14,7 @@ urlpatterns = [
   path('register/', views.register_view, name='register'),
   path('login/', views.CustomLoginView.as_view(), name='login'),
   path('dashboard/', views.dashboard_view, name='dashboard'),
+  path("generate-set/", views.generate_set_view, name="generate_set"),
+  path("save-set/", views.save_set_view, name="save_set"),
+
 ]

@@ -173,8 +173,13 @@ class TabooWord(models.Model):
 
 class TabooSet(models.Model):
   name = models.CharField(max_length=100)
-  owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="taboo_sets")
+  owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name="taboo_sets")
   language = models.ForeignKey(Language, on_delete=models.CASCADE, related_name="taboo_sets")
+
+  def is_owned_by(self, request):
+    if request.user.is_authenticated:
+      return self.owner == request.user
+    return self.session_key == request.session.session_key
 
   def __str__(self):
     return f"{self.name} ({self.owner.username}, {self.language.name})"

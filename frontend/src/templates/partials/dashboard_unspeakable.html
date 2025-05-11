@@ -1,0 +1,117 @@
+<h1 class="text-2xl text-center font-bold">UNSPEAKABLE</h1>
+<p class="text text-xs text-center">Game Control Panel</p>
+<div class="divider"></div>
+<!-- Generate Form -->
+<form id="generate-form" method="post" action="{% url 'generate_set' %}" class="space-y-4">
+  {% csrf_token %}
+  <div class="fieldset bg-base-300 border-base-300 rounded-box border p-4">
+    <div>
+      <label class="label">Theme</label>
+      <input type="text" name="theme" maxlength="50" class="input input-bordered w-full" value="{{ selected_theme|default:'' }}" required />
+    </div>
+
+    <div class="flex gap-4">
+      <div class="flex-1">
+        <label class="label">Language</label>
+        <select name="language" class="select select-bordered w-full" required>
+          <option value="" disabled selected>Choose...</option>
+          {% for lang in languages %}
+            <option value="{{ lang.id }}" {% if selected_language and lang.id == selected_language.id %}selected{% endif %}>
+              {{ lang.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="flex-1">
+        <label class="label">Level (optional)</label>
+        <select name="level" class="select select-bordered w-full">
+          {% for level in levels %}
+            <option value="{{ level.id }}" {% if selected_level and level.id == selected_level.id %}selected{% endif %}>
+              {{ level.code }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="flex-1">
+        <label class="label">Number of Cards</label>
+        <input type="number" name="count" value="25" min="1" max="50"
+              class="input input-bordered w-full" required />
+      </div>
+    </div>
+  </div>
+
+  <!-- Generate Button -->
+  <button id="generate-btn" class="btn btn-primary w-full {% if cards %}btn-outline{% endif %}">
+  <span id="generate-text">Generate</span>
+  <span id="generate-spinner" class="loading loading-spinner hidden"></span>
+  </button>
+</form>
+
+<!-- Generated Cards Preview + Save -->
+
+{% if cards %}
+  <form id="save-form" method="post" action="{% url 'save_set' %}"class="mt-6">
+    {% csrf_token %}
+    <!-- Save Button -->
+    <button id="save-btn" class="btn btn-accent w-full inline-flex items-center gap-2"">
+      <span id="save-text">Save this Set</span>
+      <i data-lucide="arrow-down" class="w-4 h-4"></i>
+      <span id="save-spinner" class="loading loading-spinner hidden"></span>
+    </button>
+    <div class="overflow-x-auto mt-6">
+      <table class="table table-xs">
+        <thead>
+          <tr>
+            <th>Target</th>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+            <th>5</th>
+            <th>6</th>
+            <th>7</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for card in cards %}
+            <tr>
+              <td>
+                {{ card.target }}
+              </td>
+              {% for word in card.taboo_words %}
+                <td>
+                  {{ word }}
+                </td>
+              {% endfor %}
+            </tr>     
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </form>
+{% endif %}
+
+<script>
+  const generateForm = document.getElementById("generate-form")
+  const saveForm = document.getElementById("save-form")
+
+  
+  if (generateForm) {
+    generateForm.addEventListener("submit", () => {
+    document.getElementById("generate-btn").disabled = true
+    document.getElementById("generate-text").classList.add("hidden")
+    document.getElementById("generate-spinner").classList.remove("hidden")
+  });
+  }
+  
+  if (saveForm) {
+    saveForm.addEventListener("submit", () => {
+    document.getElementById("save-btn").disabled = true
+    document.getElementById("save-text").classList.add("hidden")
+    document.getElementById("save-spinner").classList.remove("hidden")
+  });
+  }
+</script>
+  
+
+
