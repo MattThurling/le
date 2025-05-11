@@ -175,7 +175,7 @@ class TabooSet(models.Model):
   name = models.CharField(max_length=100)
   owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name="taboo_sets")
   language = models.ForeignKey(Language, on_delete=models.CASCADE, related_name="taboo_sets")
-
+  session_key = models.CharField(max_length=40, null=True, blank=True)
   def is_owned_by(self, request):
     if request.user.is_authenticated:
       return self.owner == request.user
