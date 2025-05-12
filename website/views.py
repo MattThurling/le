@@ -15,14 +15,14 @@ from django.contrib import messages
 
 def register_view(request):
     if request.user.is_authenticated:  # Redirect if already logged in
-        return redirect('progress')
+        return redirect('dashboard')
 
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)  # Log in the user after registering
-            return redirect('progress')
+            return redirect('dashboard')
         else:
             print("Form errors:", form.errors)
     else:
@@ -144,6 +144,8 @@ def save_set_view(request):
   lang_id = request.session.get("selected_language_id")
   theme = request.session.get("selected_theme")
 
+  session_key = session.session_key
+
   if not cards or not lang_id:
     messages.error(request, "⚠️ No cards to save — please generate first.")
     return redirect("dashboard")
@@ -151,10 +153,11 @@ def save_set_view(request):
   try:
     language = Language.objects.get(pk=lang_id)
     taboo_set = TabooSet.objects.create(
-      name=f"{theme.title()} ({language.name})",
-      owner=request.user,
+      name = f"{theme.title()} ({language.name})",
+      owner = request.user if request.user.is_authenticated else None,
+      session_key = None if request.user.is_authenticated else session_key,
       language=language
-  )
+      )
 
     for card_data in cards:
       target_word, _ = Word.objects.get_or_create(
@@ -172,10 +175,10 @@ def save_set_view(request):
         )
         TabooCardTabooWord.objects.create(card=card, taboo_word=taboo_word)
 
-      for key in ["generated_cards", "selected_language_id", "selected_theme"]:
+    for key in ["generated_cards", "selected_language_id", "selected_theme"]:
         session.pop(key, None)
 
-      messages.success(request, f"✅ Set '{taboo_set.name}' saved with {len(cards)} cards.")
+    messages.success(request, f"✅ Set '{taboo_set.name}' saved with {len(cards)} cards.")
   except Exception as e:
     messages.error(request, f"❌ Failed to save set: {str(e)}")
 

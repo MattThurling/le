@@ -1,5 +1,17 @@
-<h1 class="text-2xl text-center font-bold">UNSPEAKABLE</h1>
-<p class="text text-xs text-center">Game Control Panel</p>
+<div class="flex">
+  <div class="flex-1">
+  </div>
+  <div class="flex-6">
+    <h1 class="text-2xl text-center font-bold">UNSPEAKABLE</h1>
+    <p class="text text-xs text-center">Game Control Panel</p>
+  </div>
+  <div class="flex-1">
+    <a href="{% url 'unspeakable' %}">
+      <i data-lucide="square-play"></i>
+    </a>
+  </div>
+</div>
+
 <div class="divider"></div>
 <!-- Generate Form -->
 <form id="generate-form" method="post" action="{% url 'generate_set' %}" class="space-y-4">

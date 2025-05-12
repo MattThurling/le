@@ -12,6 +12,8 @@
       </a> 
     </div>
   </div>
+
+  <!-- <button class="btn" @click="fakeEnd">Fake End</button> -->
   
   <div class="flex flex-col lg:flex-row gap-6 max-w-5xl mx-auto mb-10 mt-8 px-4">
     <!-- Left panel: Game card -->
@@ -56,8 +58,12 @@
         <img src="https://storage.googleapis.com/le-assets/images/ravenflip.jpg" width="200px" alt="raven">
       </div>
       <div v-if="selectedSetId && !roundHasStarted" class="h-[315px]">
-        <p class="text-center pt-7">{{ tallyMessage }}</p>
-        <p class="text-6xl text-center font-mono mt-1 mb-1">{{ finalScore.toLocaleString() }}</p>
+        <div class="h-[3rem] overflow-hidden">
+          <p class="text-sm leading-snug text-center">
+            {{ tallyMessage }}
+          </p>
+        </div>
+        <p class="unspeakable-counter text-4xl text-center mb-6">{{ finalScore.toLocaleString() }}</p>
         <div class="flex justify-center gap-8">
           <div class="text-center text-green-500">
             <p class="text font-bold">{{ score.correct }}</p>
@@ -184,7 +190,6 @@ const selectedSetId = ref(null)
 const score = ref({correct: 0, passes: 0, streak: 0, max: 0})
 
 const finalScore = ref(0)
-const scoreStage = ref(0)
 const tallyMessage = ref('Score')
 
 // Cards data
@@ -216,7 +221,7 @@ const sounds = {
   crow4: 'crow5.m4a',
   crow5: 'crow6.m4a',
   base_tally: 'wooden_tally_loop_48.ogg',
-  bonus_tally: 'clicky_tally_loop.ogg',
+  penalty_tally: 'clicky_tally_loop.ogg',
   fanfare: 'fanfare.ogg',
   bell: 'doombell.ogg'
 }
@@ -251,16 +256,8 @@ const resetTimer = () => {
 
 const resetScore = () => {
   score.value = {correct: 0, passes: 0, streak: 0, max: 0}
+  finalScore.value = 0
 }
-
-const gameScore = computed(() => {
-  const { correct, passes, max } = score.value
-  const maxMultiplier = 750
-  const passPenalty = 750
-  const total = correct * (10000 + (max * maxMultiplier)) - (passPenalty * passes)
-  if (total < 0) return 0
-  return total
-})
 
 // Show only 'tabooWordCount' words
 const visibleTabooWords = computed(() => {
@@ -291,14 +288,14 @@ const startCountdown = () => {
       clearInterval(countdownInterval)
       roundHasStarted.value = false
       playSfx('whistle')
-      animateScore()
+      if (score.value.correct >= 1) animateScore()
     }
     timerMinutes.value = Math.floor(totalSeconds / 60)
     timerSeconds.value = totalSeconds % 60
   }, 1000)
 }
 
-const playSfx = (name, loop = false) => {
+const playSfx = (name, loop = false, volume = 1.0) => {
   if (!sfxBuffers[name]) {
     console.warn(`Sound "${name}" not loaded`)
     return null
@@ -307,20 +304,31 @@ const playSfx = (name, loop = false) => {
   const source = audioCtx.createBufferSource()
   source.buffer = sfxBuffers[name]
   source.loop = loop
-  source.connect(audioCtx.destination)
+
+  // Create gain node and set volume
+  const gainNode = audioCtx.createGain()
+  gainNode.gain.value = volume // Range is 0.0 (silent) to 1.0 (full volume)
+
+  // Connect nodes
+  source.connect(gainNode)
+  gainNode.connect(audioCtx.destination)
+
+  // Start playing
   source.start(0)
 
   if (loop) {
     activeLoops[name] = source
   }
+
   return source
 }
+
 
 const warmUpSound = (name) => {
   const source = audioCtx.createBufferSource();
   source.buffer = sfxBuffers[name];
   source.connect(audioCtx.destination);
-  source.start(audioCtx.currentTime + 0.001); // Start quickly but skip output
+  source.start(audioCtx.currentTime + 0.001, false, 0); // Start quickly but skip output
   source.stop(audioCtx.currentTime + 0.002); // Kill it fast
 };
 
@@ -388,21 +396,25 @@ watch(selectedSetId, async (newSetId) => {
   await fetchCards(newSetId)
 })
 
+const fakeEnd = () => {
+  score.value = {correct: 8, passes: 3, streak: 0, max: 3}
+  playSfx('whistle')
+  animateScore()
+}
+
 const animateScore = async () => {
 
   await new Promise(res => setTimeout(res, 2000))
 
-  const base = 10000 + score.value.correct * 1000
-  const bonus = 7500 + score.value.max * 75
-  const penalty = 15000 + score.value.passes * 75
+  const base = score.value.correct * 1000
+  const bonus = score.value.max * 75
+  const penalty = score.value.passes * 75
 
   finalScore.value = 0
-  scoreStage.value = 1
 
   // Animate count up
   tallyMessage.value = "Rewarding achievements..."
-  // playSfx('fanfare')
-  const b1 = playSfx('base_tally', true)
+  const b1 = playSfx('base_tally', true, 0.1)
   for (let i = 0; i <= base; i += 25) {
     finalScore.value = i
     await new Promise(res => setTimeout(res, 1))
@@ -412,13 +424,28 @@ const animateScore = async () => {
 
   await new Promise(res => setTimeout(res, 1000))
 
+  // Count down penalty
+  if (score.value.passes >=1) {
+    tallyMessage.value = "Punishing sins..."
+    playSfx('bell')
+    const b2 = playSfx('penalty_tally', true, 0.1)
+    let penaltyStart = finalScore.value
+    for (let i = 0; i <= penalty; i += 1) {
+      finalScore.value = Math.max(0, penaltyStart - i)
+      await new Promise(res => setTimeout(res, 1))
+    }
+    finalScore.value = Math.max(0, penaltyStart - penalty)
+    b2.stop()
+
+    await new Promise(res => setTimeout(res, 1000))
+  }
+
   // Count up bonus
-  scoreStage.value = 2
   let bonusStart = finalScore.value
-  playSfx('bell')
-  tallyMessage.value = "Punishing sins..."
-  const bonusTallySfx = playSfx('bonus_tally', true)
-  for (let i = 0; i <= bonus; i += 25) {
+  
+  tallyMessage.value = "Awarding a streak bonus so we end on a positive note..."
+  const bonusTallySfx = playSfx('base_tally', true, 0.1)
+  for (let i = 0; i <= bonus; i += 1) {
     finalScore.value = bonusStart + i
     await new Promise(res => setTimeout(res, 1))
   }
@@ -427,17 +454,6 @@ const animateScore = async () => {
 
   await new Promise(res => setTimeout(res, 1000))
 
-  // Count down penalty
-  scoreStage.value = 3
-  tallyMessage.value = "Awarding a streak bonus so we end on a positive note..."
-  const b2 = playSfx('base_tally', true)
-  let penaltyStart = finalScore.value
-  for (let i = 0; i <= penalty; i += 25) {
-    finalScore.value = Math.max(0, penaltyStart - i)
-    await new Promise(res => setTimeout(res, 1))
-  }
-  finalScore.value = Math.max(0, penaltyStart - penalty)
-  b2.stop()
   tallyMessage.value = "Congratulations! You scored:"
 }
 
