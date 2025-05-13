@@ -3,7 +3,7 @@
   <div class="flex-4">
     <h1 class="opti text-center">UNSPEAKABLE</h1>
   </div>
-  <button class="btn" @click="fakeEnd">Fake End</button>
+  <!-- <button class="btn" @click="fakeEnd">Fake End</button> -->
   
   <div class="flex flex-col lg:flex-row gap-6 max-w-5xl mx-auto mb-10 mt-8 px-4">
     <!-- Left panel: Game card -->

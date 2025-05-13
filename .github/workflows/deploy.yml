@@ -45,7 +45,7 @@ jobs:
           echo "DATABASE_URL=postgres://postgres:postgres@localhost:5432/test_postgres" >> $GITHUB_ENV
           echo "DB_SSL=false" >> $GITHUB_ENV
           echo "OPENAI_KEY=nosecret" >> $GITHUB_ENV
-
+          echo "MAX_CALLS_PER_SESSION=5" >> $GITHUB_ENV
 
       - name: Run migrations and tests
         env:
