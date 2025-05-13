@@ -1,18 +1,8 @@
 <template>
 <div class="mt-8 unspeakable-text">
-  <div class="flex">
-    <div class="flex-1">
-    </div>
-    <div class="flex-4">
-      <h1 class="opti text-center">UNSPEAKABLE</h1>
-    </div>
-    <div class="flex-1 flex justify-end">
-      <a href="/dashboard">
-        <Settings />
-      </a> 
-    </div>
+  <div class="flex-4">
+    <h1 class="opti text-center">UNSPEAKABLE</h1>
   </div>
-
   <!-- <button class="btn" @click="fakeEnd">Fake End</button> -->
   
   <div class="flex flex-col lg:flex-row gap-6 max-w-5xl mx-auto mb-10 mt-8 px-4">
@@ -164,6 +154,15 @@
           class="range range-xs range-neutral"
         />
       </div>
+
+      <!-- Settings link -->
+      <div class="mt-8">
+        <a href="/dashboard">
+          <Settings />
+        </a>
+      </div>
+      
+
     </div>
   </div>
 </div>

@@ -11,6 +11,7 @@ from .forms import RegisterForm
 from django.contrib.auth.views import LoginView
 from .openai.api import generate_set
 from django.contrib import messages
+from django.conf import settings
 
 
 def register_view(request):
@@ -107,11 +108,11 @@ def dashboard_view(request):
 
 @require_POST
 def generate_set_view(request):
-  MAX_CALLS_PER_SESSION = 3
+
   session = request.session
   session.setdefault('openai_call_count', 0)
   
-  if session['openai_call_count'] >= MAX_CALLS_PER_SESSION:
+  if session['openai_call_count'] >= settings.MAX_CALLS_PER_SESSION:
     messages.error(request, 'You’ve reached the maximum number of sets for this session.')
     return redirect("dashboard")
 
@@ -153,7 +154,7 @@ def save_set_view(request):
   try:
     language = Language.objects.get(pk=lang_id)
     taboo_set = TabooSet.objects.create(
-      name = f"{theme.title()} ({language.name})",
+      name = theme.title(),
       owner = request.user if request.user.is_authenticated else None,
       session_key = None if request.user.is_authenticated else session_key,
       language=language

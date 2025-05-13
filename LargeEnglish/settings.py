@@ -9,7 +9,9 @@ DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "t", "yes")
 
 AUTH_USER_MODEL = 'website.User'
 
-BASE_DOMAIN=os.getenv("BASE_DOMAIN")
+BASE_DOMAIN = os.getenv("BASE_DOMAIN")
+
+MAX_CALLS_PER_SESSION = int(os.getenv("MAX_CALLS_PER_SESSION"))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

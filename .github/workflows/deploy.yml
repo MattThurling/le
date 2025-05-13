@@ -112,7 +112,8 @@ jobs:
             --set-env-vars SECRET_KEY=${{ secrets.SECRET_KEY }} \
             --set-env-vars DEBUG=False \
             --set-env-vars OPENAI_KEY=${{ secrets.OPENAI_KEY }} \
-            --set-env-vars BASE_DOMAIN=sfl.ai
+            --set-env-vars BASE_DOMAIN=sfl.ai \
+            --set-env-vars MAX_CALLS_PER_SESSION=5
 
 
 
