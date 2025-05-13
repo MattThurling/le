@@ -3,7 +3,7 @@
   <div class="flex-4">
     <h1 class="opti text-center">UNSPEAKABLE</h1>
   </div>
-  <!-- <button class="btn" @click="fakeEnd">Fake End</button> -->
+  <button class="btn" @click="fakeEnd">Fake End</button>
   
   <div class="flex flex-col lg:flex-row gap-6 max-w-5xl mx-auto mb-10 mt-8 px-4">
     <!-- Left panel: Game card -->
@@ -306,7 +306,7 @@ const playSfx = (name, loop = false, volume = 1.0) => {
 
   // Create gain node and set volume
   const gainNode = audioCtx.createGain()
-  gainNode.gain.value = volume // Range is 0.0 (silent) to 1.0 (full volume)
+  gainNode.gain.setValueAtTime(volume, audioCtx.currentTime) // Range is 0.0 (silent) to 1.0 (full volume)
 
   // Connect nodes
   source.connect(gainNode)
@@ -316,12 +316,29 @@ const playSfx = (name, loop = false, volume = 1.0) => {
   source.start(0)
 
   if (loop) {
-    activeLoops[name] = source
+    activeLoops[name] = { source, gainNode }
   }
 
-  return source
+  return { source, gainNode }
 }
 
+const stopSfx = (name, fadeOutTime = 0.05) => {
+  const loopData = activeLoops[name]
+  if (!loopData) return
+
+  const { source, gainNode } = loopData
+  const now = audioCtx.currentTime
+
+  // Fade out the volume
+  gainNode.gain.setValueAtTime(gainNode.gain.value, now)
+  gainNode.gain.linearRampToValueAtTime(0, now + fadeOutTime)
+
+  // Stop the source after fade out
+  source.stop(now + fadeOutTime)
+
+  // Clean up
+  delete activeLoops[name]
+}
 
 const warmUpSound = (name) => {
   const source = audioCtx.createBufferSource();
@@ -395,6 +412,7 @@ watch(selectedSetId, async (newSetId) => {
   await fetchCards(newSetId)
 })
 
+// For mixing and testing
 const fakeEnd = () => {
   score.value = {correct: 8, passes: 3, streak: 0, max: 3}
   playSfx('whistle')
@@ -413,12 +431,12 @@ const animateScore = async () => {
 
   // Animate count up
   tallyMessage.value = "Rewarding achievements..."
-  const b1 = playSfx('base_tally', true, 0.1)
+  playSfx('base_tally', true, 0.3)
   for (let i = 0; i <= base; i += 25) {
     finalScore.value = i
     await new Promise(res => setTimeout(res, 1))
   }
-  b1.stop()
+  stopSfx('base_tally')
   finalScore.value = base
 
   await new Promise(res => setTimeout(res, 1000))
@@ -427,14 +445,14 @@ const animateScore = async () => {
   if (score.value.passes >=1) {
     tallyMessage.value = "Punishing sins..."
     playSfx('bell')
-    const b2 = playSfx('penalty_tally', true, 0.1)
+    playSfx('penalty_tally', true, 0.3)
     let penaltyStart = finalScore.value
     for (let i = 0; i <= penalty; i += 1) {
       finalScore.value = Math.max(0, penaltyStart - i)
       await new Promise(res => setTimeout(res, 1))
     }
     finalScore.value = Math.max(0, penaltyStart - penalty)
-    b2.stop()
+    stopSfx('penalty_tally')
 
     await new Promise(res => setTimeout(res, 1000))
   }
@@ -443,12 +461,12 @@ const animateScore = async () => {
   let bonusStart = finalScore.value
   
   tallyMessage.value = "Awarding a streak bonus so we end on a positive note..."
-  const bonusTallySfx = playSfx('base_tally', true, 0.1)
+  playSfx('base_tally', true, 0.3)
   for (let i = 0; i <= bonus; i += 1) {
     finalScore.value = bonusStart + i
     await new Promise(res => setTimeout(res, 1))
   }
-  bonusTallySfx.stop()
+  stopSfx('base_tally')
   finalScore.value = bonusStart + bonus
 
   await new Promise(res => setTimeout(res, 1000))
