@@ -11,7 +11,7 @@ AUTH_USER_MODEL = 'website.User'
 
 BASE_DOMAIN = os.getenv("BASE_DOMAIN")
 
-MAX_CALLS_PER_SESSION = int(os.getenv("MAX_CALLS_PER_SESSION"))
+MAX_CALLS_PER_SESSION = int(os.getenv("MAX_CALLS_PER_SESSION", "5"))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
