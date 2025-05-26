@@ -2,19 +2,119 @@
 
 {% block content %}
 {% include "partials/navigation.html" %}
-<main class="container max-w-4xl mx-auto px-4">
-  <div class="hero bg-base-200 min-h-[50vh] mt-6">
-    <div class="hero-content text-center">
-      <div class="max-w-md">
-        <h1 class="text-5xl font-bold">Speak a Foreign Language</h1>
-        <p class="py-6">
-          A new approach to language learning, using research-backed techniques to help you achieve your goals.
+<main>
+  <!-- Hero Section -->
+  <div
+    class="hero min-h-screen bg-cover bg-no-repeat bg-[60%_30%]"
+    style="background-image: url('https://storage.googleapis.com/le-assets/images/bg.jpeg');"
+  >
+    <div class="hero-overlay bg-opacity-60"></div>
+    <div class="hero-content text-neutral-content text-center">
+      <div class="max-w-xl">
+        <h1 class="mb-5 text-5xl font-bold">Hey, language teacher!</h1>
+        <p class="mb-5">
+          SFL can help you with the boring stuff so you can do what you do best.
         </p>
-        <a href="mailto:hello@largeenglish.com" class="btn btn-primary">
-          Join the waiting list
+        <a class="btn btn-primary w-64 mx-auto" href="#progress">
+          Find out how
         </a>
       </div>
     </div>
   </div>
+
+  <!-- Page Content -->
+  <div class="px-6 py-8">
+    <div class="max-w-5xl mx-auto">
+
+      <!-- Section 1: Progress Tracker -->
+      <div class="divider my-12"></div>
+      <div class="flex flex-col md:flex-row items-start md:items-center" id="progress">
+        <!-- Text block -->
+        <div class="w-full md:w-2/3 md:pr-6">
+          <h2 class="text-2xl mb-3">Motivate students to do their homework</h2>
+          <p class="mb-4">
+            One small tweak in how you set homework can result in a 600% increase in time input from your students.
+          </p>
+        </div>
+        <!-- Image block -->
+        <div class="w-full md:w-1/3 flex justify-center md:justify-end items-center mt-6 md:mt-0">
+          <img
+            src="https://storage.googleapis.com/le-assets/images/progress.png"
+            alt="Progress tracker"
+            class="w-32 md:w-60 h-auto object-contain"
+          />
+        </div>
+      </div>
+      <!-- Button -->
+      <div class="flex justify-center md:justify-start mt-6">
+        <button class="btn btn-primary w-full md:w-64">
+          Learn more
+        </button>
+      </div>
+
+      <!-- Section 2: Drill Chat -->
+      <div class="divider my-12"></div>
+      <div class="flex flex-col md:flex-row items-start md:items-center">
+        <!-- Text block -->
+        <div class="w-full md:w-2/3 md:pr-6">
+          <h2 class="text-2xl mb-3">Custom drills</h2>
+          <p class="mb-4">
+            Like Duolingo, but without the owl and randomness.
+          </p>
+        </div>
+        <!-- Image block -->
+        <div class="w-full md:w-1/3 flex justify-center md:justify-end mt-6 md:mt-0">
+          <div class="mockup-window bg-base-100 border border-base-300 px-4 pb-4">
+            <div class="chat chat-start">
+              <div class="chat-bubble bg-accent font-mono">
+                Rewrite in active voice:
+                <br />
+                Humans will not be replaced by robots.
+              </div>
+            </div>
+            <div class="chat chat-end">
+              <div class="chat-bubble bg-secondary font-mono">Robots will not replace humans.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Button -->
+      <div class="flex justify-center md:justify-start mt-6">
+        <a class="btn btn-primary w-full md:w-64" href="/prompts">
+          Explore the drills
+        </a>
+      </div>
+
+      <!-- Section 3: Game -->
+      <div class="divider my-12"></div>
+      <div class="flex flex-col md:flex-row items-start md:items-center">
+        <!-- Text block -->
+        <div class="w-full md:w-2/3 md:pr-6">
+          <h2 class="text-2xl mb-3">Games</h2>
+          <p class="mb-4">
+            Build confidence and vocabulary naturally.
+          </p>
+        </div>
+        <!-- Image block -->
+        <div class="w-full md:w-1/3 flex justify-center md:justify-end items-center mt-6 md:mt-0">
+          <img
+            src="https://storage.googleapis.com/le-assets/images/unspeakable.png"
+            alt="Game"
+            class="w-32 md:w-60 h-auto object-contain"
+          />
+        </div>
+      </div>
+      <!-- Button -->
+      <div class="flex justify-center md:justify-start mt-6">
+        <a class="btn btn-primary w-full md:w-64" href="/unspeakable">
+          Play now
+        </a>
+      </div>
+
+      <div class="divider my-12"></div>
+    </div>
+  </div>
 </main>
+
+
 {% endblock %}
