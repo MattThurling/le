@@ -287,6 +287,7 @@ const startCountdown = () => {
       clearInterval(countdownInterval)
       roundHasStarted.value = false
       playSfx('whistle')
+      nextCard()
       if (score.value.correct >= 1) animateScore()
     }
     timerMinutes.value = Math.floor(totalSeconds / 60)
