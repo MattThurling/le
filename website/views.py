@@ -118,13 +118,14 @@ def generate_set_view(request):
 
   language_id = request.POST.get("language")
   theme = request.POST.get("theme", "").strip()
+  word_list = request.POST.get("list")
   level_id = request.POST.get("level")
   count = int(request.POST.get("count", 30))
 
   try:
     language = Language.objects.get(pk=language_id)
     level = Level.objects.get(pk=level_id)
-    generated = generate_set(language.name, theme, count, level.code)
+    generated = generate_set(language.name, theme, count, level.code, word_list)
 
     session["generated_cards"] = generated['cards']
     session["selected_language_id"] = language.id
